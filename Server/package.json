@@ -1,0 +1,21 @@
+{
+  "name": "UNO-REDES",
+  "version": "",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "client": "npm start --prefix client",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbrilPal/Proyecto2-Redes"
+  },
+  "author": "Abril Palencia",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "socket.io": "^3.1.1"
+  }
+}
