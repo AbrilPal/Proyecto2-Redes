@@ -64,7 +64,6 @@ const Gamepage = (props) => {
         const mano1 = shuffledCards.splice(0,7)
         const mano2 = shuffledCards.splice(0,7)
 
-         //extract random card from shuffledCards and check if its not an action card
          let startingCardIndex
          while(true) {
              startingCardIndex = Math.floor(Math.random() * 94)
@@ -79,10 +78,8 @@ const Gamepage = (props) => {
                  break;
          }
  
-         //extract the card from that startingCardIndex into the playedCardsPile
          const playedCardsPile = shuffledCards.splice(startingCardIndex, 1)
  
-         //store all remaining cards into drawCardPile
          const drawCardPile = shuffledCards
 
         socket.emit('initGameState', {
@@ -124,6 +121,7 @@ const Gamepage = (props) => {
                 <>
                     {gameOver ? <h1>Fin del juego, gano {winner}</h1> :
                     <>
+
                     </>
                     }
                 </>}
