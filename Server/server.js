@@ -66,6 +66,12 @@ io.on('connection', (socket) => {
         if(user)
             io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)})
     })
+
+    socket.on('initGameState', gameState => {
+        const user = getUser(socket.id)
+        if(user)
+            io.to(user.room).emit('initGameState', gameState)
+    })
 })
 
 

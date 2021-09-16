@@ -29,6 +29,15 @@ const Gamepage = (props) => {
     const [roomFull, setRoomFull] = useState(false)
     const [currentUser, setCurrentUser] = useState('')
     const [users, setUsers] = useState([])
+    const [gameOver, setGameOver] = useState(true)
+    const [player1Deck, setPlayer1Deck] = useState([])
+    const [player2Deck, setPlayer2Deck] = useState([])
+    const [currentColor, setCurrentColor] = useState('')
+    const [currentNumber, setCurrentNumber] = useState('')
+    const [winner, setWinner] = useState()
+    const [playedCardsPile, setPlayedCardsPile] = useState([])
+    const [drawCardPile, setDrawCardPile] = useState([])
+    const [turn, setTurn] = useState('')
     let socket
     const ENDPOINT = 'http://localhost:1800'
 
@@ -54,11 +63,53 @@ const Gamepage = (props) => {
         const shuffledCards = shuffleCartas(paqueteDeCartas)
         const mano1 = shuffledCards.splice(0,7)
         const mano2 = shuffledCards.splice(0,7)
+
+         //extract random card from shuffledCards and check if its not an action card
+         let startingCardIndex
+         while(true) {
+             startingCardIndex = Math.floor(Math.random() * 94)
+             if(shuffledCards[startingCardIndex]==='skipR' || shuffledCards[startingCardIndex]==='_R' || shuffledCards[startingCardIndex]==='D2R' ||
+             shuffledCards[startingCardIndex]==='skipG' || shuffledCards[startingCardIndex]==='_G' || shuffledCards[startingCardIndex]==='D2G' ||
+             shuffledCards[startingCardIndex]==='skipB' || shuffledCards[startingCardIndex]==='_B' || shuffledCards[startingCardIndex]==='D2B' ||
+             shuffledCards[startingCardIndex]==='skipY' || shuffledCards[startingCardIndex]==='_Y' || shuffledCards[startingCardIndex]==='D2Y' ||
+             shuffledCards[startingCardIndex]==='W' || shuffledCards[startingCardIndex]==='D4W') {
+                 continue;
+             }
+             else
+                 break;
+         }
+ 
+         //extract the card from that startingCardIndex into the playedCardsPile
+         const playedCardsPile = shuffledCards.splice(startingCardIndex, 1)
+ 
+         //store all remaining cards into drawCardPile
+         const drawCardPile = shuffledCards
+
+        socket.emit('initGameState', {
+            gameOver: false,
+            turn: 'Player 1',
+            mano1: [...mano1],
+            mano2: [...mano2],
+            currentColor: playedCardsPile[0].charAt(1),
+            currentNumber: playedCardsPile[0].charAt(0),
+            playedCardsPile: [...playedCardsPile],
+            drawCardPile: [...drawCardPile]
+        })
     }, [])
 
     useEffect(() => {
         socket.on("roomData", ({ users }) => {
             setUsers(users)
+        })
+        socket.on('initGameState', ({ gameOver, turn, mano1, mano2, currentColor, currentNumber, playedCardsPile, drawCardPile }) => {
+            setGameOver(gameOver)
+            setTurn(turn)
+            setPlayer1Deck(mano1)
+            setPlayer2Deck(mano2)
+            setCurrentColor(currentColor)
+            setCurrentNumber(currentNumber)
+            setPlayedCardsPile(playedCardsPile)
+            setDrawCardPile(drawCardPile)
         })
         socket.on('currentUserData', ({ name }) => {
             setCurrentUser(name)
@@ -69,7 +120,13 @@ const Gamepage = (props) => {
              {(!roomFull) ? 
              <>
                 <h1>{room}</h1>
-                {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: <></>}
+                {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: 
+                <>
+                    {gameOver ? <h1>Fin del juego, gano {winner}</h1> :
+                    <>
+                    </>
+                    }
+                </>}
             </>:
             <h1> Lo siento, esta llena la sala</h1>}
         </div>
