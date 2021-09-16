@@ -42,7 +42,11 @@ const Gamepage = (props) => {
     }, [])
     return (
         <div className='Homepage'>
-            <h1>{room}</h1>
+             {(!roomFull) ? 
+             <>
+                <h1>{room}</h1>
+            </>:
+            <h1> Lo siento, esta llena la sala</h1>}
         </div>
     )
 }

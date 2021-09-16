@@ -22,17 +22,21 @@ io.on('connection', (socket) => {
 
     socket.on('join', (data, callback) => {
         let numberOfUsersInRoom = getUsersInRoom(data.room).length
-        console.log(data)
+        console.log(numberOfUsersInRoom)
+        if(numberOfUsersInRoom <= 1){
         const { error, newUser} = addUser({
             id: socket.id,
             name: numberOfUsersInRoom===0 ? 'Player 1' : 'Player 2',
             room: data.room
         })
 
-        if(error)
-            return callback(error)
+        console.log(newUser)
+        console.log(error)
 
         socket.join(newUser.room)
+        }else{
+            return callback("no se puede")
+        }
 
         // io.to(newUser.room).emit('roomData', {room: newUser.room, users: getUsersInRoom(newUser.room)})
         // socket.emit('currentUserData', {name: newUser.name})
