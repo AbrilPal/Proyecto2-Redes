@@ -1,9 +1,32 @@
 const express = require('express')
 const socketio = require('socket.io')
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./users')
+const users = []
+
+const addUser = ({id, name, room}) => {
+    const numberOfUsersInRoom = users.filter(user => user.room === room).length
+    if(numberOfUsersInRoom === 4)
+    return { error: 'La sala ya esta llena' }
+
+    const newUser = { id, name, room }
+    users.push(newUser)
+    return { newUser }
+}
+
+const removeUser = id => {
+    const removeIndex = users.findIndex(user => user.id === id)
+
+    if(removeIndex!==-1)
+        return users.splice(removeIndex, 1)[0]
+}
+
+const getUser = id => {
+    return users.find(user => user.id === id)
+}
+
+const getUsersInRoom = room => {
+    return users.filter(user => user.room === room)
+}
 const path = require('path')
-
-
 
 const PORT = process.env.PORT || 1800
 const app = express()
@@ -22,7 +45,6 @@ io.on('connection', (socket) => {
 
     socket.on('join', (data, callback) => {
         let numberOfUsersInRoom = getUsersInRoom(data.room).length
-        console.log(numberOfUsersInRoom)
         if(numberOfUsersInRoom <= 1){
         const { error, newUser} = addUser({
             id: socket.id,
@@ -42,12 +64,10 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
-        // if(user)
-        //     io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)})
+        console.log("se desconecto el usuario: ", user.name, " del room : ", user.room)
+        if(user)
+            io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)})
     })
 })
-
-
-
 
 

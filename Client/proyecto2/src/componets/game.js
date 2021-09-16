@@ -51,7 +51,6 @@ const Gamepage = (props) => {
              {(!roomFull) ? 
              <>
                 <h1>{room}</h1>
-                {console.log(users.length)}
                 {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: <></>}
             </>:
             <h1> Lo siento, esta llena la sala</h1>}
