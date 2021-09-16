@@ -17,6 +17,8 @@ const Gamepage = (props) => {
     const data = queryString.parse(props.location.search)
     const [room, setRoom] = useState(data.roomCode)
     const [roomFull, setRoomFull] = useState(false)
+    const [currentUser, setCurrentUser] = useState('')
+    const [users, setUsers] = useState([])
     let socket
     const ENDPOINT = 'http://localhost:1800'
 
@@ -26,23 +28,31 @@ const Gamepage = (props) => {
         "reconnectionAttempts": "Infinity", 
         "timeout" : 10000,                  
         "transports" : ["websocket"]
-    }
-    socket = io.connect(ENDPOINT, connectionOptions)
-    socket.emit('join', {room: room}, (error) => {
-        if(error)
-            setRoomFull(true)
-    })
+        }
+        socket = io.connect(ENDPOINT, connectionOptions)
+        socket.emit('join', {room: room}, (error) => {
+            if(error)
+                setRoomFull(true)
+        })
+        return function desconectar() {
+            socket.emit('disconnect')
+            socket.off()
+        }
+    }, [])
 
-    return function desconectar() {
-        socket.emit('disconnect')
-        socket.off()
-    }
+    useEffect(() => {
+        socket.on("roomData", ({ users }) => {
+            setUsers(users)
+        })
+
     }, [])
     return (
         <div className='Homepage'>
              {(!roomFull) ? 
              <>
                 <h1>{room}</h1>
+                {console.log(users.length)}
+                {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: <></>}
             </>:
             <h1> Lo siento, esta llena la sala</h1>}
         </div>

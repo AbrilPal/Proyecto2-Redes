@@ -30,11 +30,12 @@ io.on('connection', (socket) => {
             room: data.room
         })
         socket.join(newUser.room)
+        io.to(newUser.room).emit('roomData', {room: newUser.room, users: getUsersInRoom(newUser.room)})
         }else{
             return callback("no se puede")
         }
 
-        // io.to(newUser.room).emit('roomData', {room: newUser.room, users: getUsersInRoom(newUser.room)})
+        
         // socket.emit('currentUserData', {name: newUser.name})
         callback()
     })
