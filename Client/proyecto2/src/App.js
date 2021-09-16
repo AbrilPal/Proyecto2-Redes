@@ -1,31 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client'
+import { useEffect } from 'react';
 
 function App() {
-  
-  // const readline = require('readline-sync')
 
-  // const options = {
-  //     port: 4000,
-  //     host: '127.0.0.1'
-  // }
+  let socket
+  const ENDPOINT = 'http://localhost:1800'
 
-  // const client = net.createConnection(options)
-
-  // client.on('connect', ()=>{
-  //     console.log('Conexión satisfactoria!!')
-  //     // sendLine()
-  // })
-
-  // client.on('data',const net = require('net'); (data)=>{
-  //     console.log('El servidor dice:' + data)
-  //     // sendLine()
-  // })
-
-  // client.on('error', (err)=>{
-  //     console.log(err.message)
-  // })
+  useEffect(() => {
+    const connectionOptions =  {
+      "forceNew" : true,
+      "reconnectionAttempts": "Infinity", 
+      "timeout" : 10000,                  
+      "transports" : ["websocket"]
+  }
+  socket = io.connect(ENDPOINT, connectionOptions)
+  })
 
   return (
     <div className="App">
