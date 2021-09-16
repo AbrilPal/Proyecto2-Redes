@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client'
 import { useEffect } from 'react';
+import Homepage from './componets/home'
 
 function App() {
 
@@ -10,7 +11,7 @@ function App() {
 
   useEffect(() => {
     const connectionOptions =  {
-      "forceNew" : true,
+      "forceNew" : true, 
       "reconnectionAttempts": "Infinity", 
       "timeout" : 10000,                  
       "transports" : ["websocket"]
@@ -20,7 +21,7 @@ function App() {
 
   return (
     <div className="App">
-      hola
+      <Homepage />
     </div>
   );
 }

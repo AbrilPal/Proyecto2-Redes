@@ -17,8 +17,8 @@ const server = app.listen(app.get('port'), () => {
 
 const io = socketio(server)
 
-io.on('connection', () => {
-    console.log("se conecto alguien")
+io.on('connection', (socket) => {
+    console.log("se conecto alguien " , socket.id)
 })
 
 
