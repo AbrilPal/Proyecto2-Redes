@@ -21,14 +21,14 @@ const Homepage = () => {
                     <div className='homepage-join'>
                         <input type='text' placeholder='Codigo de la sala' onChange={(event) => setRoomCode(event.target.value)} />
                         {/* <Link to={`/play?roomCode=${roomCode}`}> */}
-                            <button className="game-button green">JOIN GAME</button>
+                            <button className="game-button green">Unirse</button>
                         {/* </Link> */}
                     </div>
                     <h1>O</h1>
                     <div className='homepage-create'>
-                        {/* <Link to={`/play?roomCode=${randomCodeGenerator(5)}`}> */}
+                        <Link to={`/play?roomCode=${makeid(5)}`}>
                             <button className="game-button orange">Nueva sala</button>
-                        {/* </Link> */}
+                        </Link>
                     </div>
                 </div>
             </div>
