@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
+import queryString from 'query-string'
 
 function makeid(length) {
     var result           = '';
@@ -13,6 +14,8 @@ function makeid(length) {
 }
 
 const Gamepage = (props) => {
+    const data = queryString.parse(props.location.search)
+    const [room, setRoom] = useState(data.roomCode)
     let socket
     const ENDPOINT = 'http://localhost:1800'
 
@@ -27,7 +30,7 @@ const Gamepage = (props) => {
     })
     return (
         <div className='Homepage'>
-            game
+            <h1>{room}</h1>
         </div>
     )
 }
