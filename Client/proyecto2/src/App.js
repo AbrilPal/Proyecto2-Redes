@@ -1,8 +1,15 @@
 import logo from './logo.svg';
 import './App.css';
 import io from 'socket.io-client'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import { useEffect } from 'react';
 import Homepage from './componets/home'
+import gamepage from './componets/game'
 
 function App() {
 
@@ -21,7 +28,10 @@ function App() {
 
   return (
     <div className="App">
-      <Homepage />
+      <Router>
+        <Route path='/' exact component={Homepage} />
+        <Route path='/play' exact component={gamepage} />
+      </Router>
     </div>
   );
 }
