@@ -33,10 +33,8 @@ const Gamepage = (props) => {
             setRoomFull(true)
     })
 
-    //cleanup on component unmount
-    return function cleanup() {
+    return function desconectar() {
         socket.emit('disconnect')
-        //shut down connnection instance
         socket.off()
     }
     }, [])

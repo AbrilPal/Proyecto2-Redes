@@ -29,10 +29,6 @@ io.on('connection', (socket) => {
             name: numberOfUsersInRoom===0 ? 'Player 1' : 'Player 2',
             room: data.room
         })
-
-        console.log(newUser)
-        console.log(error)
-
         socket.join(newUser.room)
         }else{
             return callback("no se puede")
@@ -41,6 +37,12 @@ io.on('connection', (socket) => {
         // io.to(newUser.room).emit('roomData', {room: newUser.room, users: getUsersInRoom(newUser.room)})
         // socket.emit('currentUserData', {name: newUser.name})
         callback()
+    })
+
+    socket.on('disconnect', () => {
+        const user = removeUser(socket.id)
+        // if(user)
+        //     io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)})
     })
 })
 
