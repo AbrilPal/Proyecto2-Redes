@@ -1,23 +1,35 @@
 import logo from './logo.svg';
 import './App.css';
+import io from 'socket.io-client'
 
 function App() {
+  
+  // const readline = require('readline-sync')
+
+  // const options = {
+  //     port: 4000,
+  //     host: '127.0.0.1'
+  // }
+
+  // const client = net.createConnection(options)
+
+  // client.on('connect', ()=>{
+  //     console.log('Conexión satisfactoria!!')
+  //     // sendLine()
+  // })
+
+  // client.on('data',const net = require('net'); (data)=>{
+  //     console.log('El servidor dice:' + data)
+  //     // sendLine()
+  // })
+
+  // client.on('error', (err)=>{
+  //     console.log(err.message)
+  // })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      hola
     </div>
   );
 }
