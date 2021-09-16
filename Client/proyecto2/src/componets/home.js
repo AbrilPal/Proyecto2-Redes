@@ -20,9 +20,9 @@ const Homepage = () => {
                 <div className='homepage-form'>
                     <div className='homepage-join'>
                         <input type='text' placeholder='Codigo de la sala' onChange={(event) => setRoomCode(event.target.value)} />
-                        {/* <Link to={`/play?roomCode=${roomCode}`}> */}
+                        <Link to={`/play?roomCode=${roomCode}`}>
                             <button className="game-button green">Unirse</button>
-                        {/* </Link> */}
+                        </Link>
                     </div>
                     <h1>O</h1>
                     <div className='homepage-create'>

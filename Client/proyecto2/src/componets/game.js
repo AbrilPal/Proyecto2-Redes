@@ -16,6 +16,7 @@ function makeid(length) {
 const Gamepage = (props) => {
     const data = queryString.parse(props.location.search)
     const [room, setRoom] = useState(data.roomCode)
+    const [roomFull, setRoomFull] = useState(false)
     let socket
     const ENDPOINT = 'http://localhost:1800'
 
@@ -27,7 +28,18 @@ const Gamepage = (props) => {
         "transports" : ["websocket"]
     }
     socket = io.connect(ENDPOINT, connectionOptions)
+    socket.emit('join', {room: room}, (error) => {
+        if(error)
+            setRoomFull(true)
     })
+
+    //cleanup on component unmount
+    return function cleanup() {
+        socket.emit('disconnect')
+        //shut down connnection instance
+        socket.off()
+    }
+    }, [])
     return (
         <div className='Homepage'>
             <h1>{room}</h1>
