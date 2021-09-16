@@ -3,18 +3,28 @@ import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 import queryString from 'query-string'
 
-function makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+function shuffleCartas(array) { 
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1))
+        var temp = array[i]
+        array[i] = array[j]
+        array[j] = temp;
+    }   
+    return array
 }
 
 const Gamepage = (props) => {
+
+    const paqueteDeCartas = [
+        '0R', '1R', '1R', '2R', '2R', '3R', '3R', '4R', '4R', '5R', '5R', '6R', '6R', '7R', '7R', '8R', '8R', '9R', '9R', 'skipR', 'skipR', '_R', '_R', 'D2R', 'D2R',
+        '0G', '1G', '1G', '2G', '2G', '3G', '3G', '4G', '4G', '5G', '5G', '6G', '6G', '7G', '7G', '8G', '8G', '9G', '9G', 'skipG', 'skipG', '_G', '_G', 'D2G', 'D2G',
+        '0B', '1B', '1B', '2B', '2B', '3B', '3B', '4B', '4B', '5B', '5B', '6B', '6B', '7B', '7B', '8B', '8B', '9B', '9B', 'skipB', 'skipB', '_B', '_B', 'D2B', 'D2B',
+        '0Y', '1Y', '1Y', '2Y', '2Y', '3Y', '3Y', '4Y', '4Y', '5Y', '5Y', '6Y', '6Y', '7Y', '7Y', '8Y', '8Y', '9Y', '9Y', 'skipY', 'skipY', '_Y', '_Y', 'D2Y', 'D2Y',
+        'W', 'W', 'W', 'W', 'D4W', 'D4W', 'D4W', 'D4W'
+    ]
+
     const data = queryString.parse(props.location.search)
+    // los estados del juego 
     const [room, setRoom] = useState(data.roomCode)
     const [roomFull, setRoomFull] = useState(false)
     const [currentUser, setCurrentUser] = useState('')
@@ -41,10 +51,18 @@ const Gamepage = (props) => {
     }, [])
 
     useEffect(() => {
+        const shuffledCards = shuffleCartas(paqueteDeCartas)
+        const mano1 = shuffledCards.splice(0,7)
+        const mano2 = shuffledCards.splice(0,7)
+    }, [])
+
+    useEffect(() => {
         socket.on("roomData", ({ users }) => {
             setUsers(users)
         })
-
+        socket.on('currentUserData', ({ name }) => {
+            setCurrentUser(name)
+        })
     }, [])
     return (
         <div className='Homepage'>

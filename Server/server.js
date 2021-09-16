@@ -5,7 +5,7 @@ const users = []
 const addUser = ({id, name, room}) => {
     const numberOfUsersInRoom = users.filter(user => user.room === room).length
     if(numberOfUsersInRoom === 4)
-    return { error: 'La sala ya esta llena' }
+    return { error: 'llena' }
 
     const newUser = { id, name, room }
     users.push(newUser)
@@ -53,12 +53,10 @@ io.on('connection', (socket) => {
         })
         socket.join(newUser.room)
         io.to(newUser.room).emit('roomData', {room: newUser.room, users: getUsersInRoom(newUser.room)})
+        socket.emit('currentUserData', {name: newUser.name})
         }else{
             return callback("no se puede")
         }
-
-        
-        // socket.emit('currentUserData', {name: newUser.name})
         callback()
     })
 
