@@ -4,7 +4,7 @@ const users = []
 
 const addUser = ({id, name, sala}) => {
     const numberOfUsersInsala = users.filter(user => user.sala === sala).length
-    if(numberOfUsersInsala === 4)
+    if(numberOfUsersInsala === 3)
     return { error: 'llena' }
 
     const newUser = { id, name, sala }
@@ -45,27 +45,28 @@ io.on('connection', (socket) => {
 
     socket.on('join', (data, callback) => {
         let numberOfUsersInsala = getUsersInsala(data.sala).length
-        if(numberOfUsersInsala <= 2){
-            let nombre
-            if(numberOfUsersInsala === 0){
-                nombre = 'Player 1'
-            }else if(numberOfUsersInsala === 1){
-                nombre = 'Player 2'
-            }else if(numberOfUsersInsala === 2){
-                nombre = 'Player 3'
-            }
+        let nombre
+        if(numberOfUsersInsala === 0){
+            nombre = 'Player 1'
+        }else if(numberOfUsersInsala === 1){
+            nombre = 'Player 2'
+        }else if(numberOfUsersInsala === 2){
+            nombre = 'Player 3'
+        }
         const { error, newUser} = addUser({
             id: socket.id,
             name: nombre,
             sala: data.sala
         })
-        socket.join(newUser.sala)
-        io.to(newUser.sala).emit('salaData', {sala: newUser.sala, users: getUsersInsala(newUser.sala)})
-        socket.emit('currentUserData', {name: newUser.name})
-        }else{
-            return callback("no se puede")
-        }
-        callback()
+
+        if(error){
+            return callback(error)}
+        else{ 
+            socket.join(newUser.sala)
+            io.to(newUser.sala).emit('salaData', {sala: newUser.sala, users: getUsersInsala(newUser.sala)})
+            socket.emit('currentUserData', {name: newUser.name})
+            callback()}
+       
     })
 
     socket.on('disconnect', () => {
