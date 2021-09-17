@@ -113,7 +113,7 @@ const Gamepage = (props) => {
         })
     }, [])
     return (
-        <div className='Homepage'>
+        <div style={{'backgroundColor': "pink"}} >
              {(!roomFull) ? 
              <>
                 <h1>{room}</h1>
@@ -121,6 +121,52 @@ const Gamepage = (props) => {
                 <>
                     {gameOver ? <h1>Fin del juego, gano {winner}</h1> :
                     <>
+                        {currentUser === 'Player 1' ? 
+                         <>
+                            <p className='playerDeckText'>Player 2</p>
+                            {player2Deck.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "30px", 'height': "50px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/card-back.png`).default}
+                                    />
+                            ))}
+                            <br></br>
+                            <br></br>
+                            {player1Deck.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "50px", 'height': "70px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/${item}.png`).default}
+                                    />
+                            ))}
+                        </>:<></>} 
+
+                        {currentUser === 'Player 2' ? 
+                         <>
+                            <p className='playerDeckText'>Player 1</p>
+                            {player1Deck.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "30px", 'height': "50px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/card-back.png`).default}
+                                    />
+                            ))}
+                            <br></br>
+                            <br></br>
+                            
+                            {player2Deck.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "50px", 'height': "70px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/${item}.png`).default}
+                                    />
+                            ))}
+                        </>:<></>} 
 
                     </>
                     }
