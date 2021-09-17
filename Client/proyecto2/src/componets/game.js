@@ -32,11 +32,11 @@ const Gamepage = (props) => {
     const [gameOver, setGameOver] = useState(true)
     const [baraja1, setbaraja1] = useState([])
     const [baraja2, setbaraja2] = useState([])
-    const [currentColor, setCurrentColor] = useState('')
-    const [currentNumber, setCurrentNumber] = useState('')
+    const [colorActual, setcolorActual] = useState('')
+    const [numerActual, setnumerActual] = useState('')
     const [ganador, setganador] = useState()
     const [pilaDeCartas, setpilaDeCartas] = useState([])
-    const [drawCardPile, setDrawCardPile] = useState([])
+    const [drawPilaCartas, setdrawPilaCartas] = useState([])
     const [turno, setturno] = useState('')
     let socket
     const ENDPOINT = 'http://localhost:1800'
@@ -80,17 +80,17 @@ const Gamepage = (props) => {
  
          const pilaDeCartas = shuffledCards.splice(startingCardIndex, 1)
  
-         const drawCardPile = shuffledCards
+         const drawPilaCartas = shuffledCards
 
         socket.emit('initGameState', {
             gameOver: false,
             turno: 'Player 1',
             mano1: [...mano1],
             mano2: [...mano2],
-            currentColor: pilaDeCartas[0].charAt(1),
-            currentNumber: pilaDeCartas[0].charAt(0),
+            colorActual: pilaDeCartas[0].charAt(1),
+            numerActual: pilaDeCartas[0].charAt(0),
             pilaDeCartas: [...pilaDeCartas],
-            drawCardPile: [...drawCardPile]
+            drawPilaCartas: [...drawPilaCartas]
         })
     }, [])
 
@@ -98,15 +98,15 @@ const Gamepage = (props) => {
         socket.on("salaData", ({ users }) => {
             setUsers(users)
         })
-        socket.on('initGameState', ({ gameOver, turno, mano1, mano2, currentColor, currentNumber, pilaDeCartas, drawCardPile }) => {
+        socket.on('initGameState', ({ gameOver, turno, mano1, mano2, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             setGameOver(gameOver)
             setturno(turno)
             setbaraja1(mano1)
             setbaraja2(mano2)
-            setCurrentColor(currentColor)
-            setCurrentNumber(currentNumber)
+            setcolorActual(colorActual)
+            setnumerActual(numerActual)
             setpilaDeCartas(pilaDeCartas)
-            setDrawCardPile(drawCardPile)
+            setdrawPilaCartas(drawPilaCartas)
         })
         socket.on('currentUserData', ({ name }) => {
             setCurrentUser(name)
