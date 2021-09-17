@@ -34,10 +34,10 @@ const Gamepage = (props) => {
     const [baraja2, setbaraja2] = useState([])
     const [currentColor, setCurrentColor] = useState('')
     const [currentNumber, setCurrentNumber] = useState('')
-    const [winner, setWinner] = useState()
-    const [playedCardsPile, setPlayedCardsPile] = useState([])
+    const [ganador, setganador] = useState()
+    const [pilaDeCartas, setpilaDeCartas] = useState([])
     const [drawCardPile, setDrawCardPile] = useState([])
-    const [turn, setTurn] = useState('')
+    const [turno, setturno] = useState('')
     let socket
     const ENDPOINT = 'http://localhost:1800'
 
@@ -78,18 +78,18 @@ const Gamepage = (props) => {
                  break;
          }
  
-         const playedCardsPile = shuffledCards.splice(startingCardIndex, 1)
+         const pilaDeCartas = shuffledCards.splice(startingCardIndex, 1)
  
          const drawCardPile = shuffledCards
 
         socket.emit('initGameState', {
             gameOver: false,
-            turn: 'Player 1',
+            turno: 'Player 1',
             mano1: [...mano1],
             mano2: [...mano2],
-            currentColor: playedCardsPile[0].charAt(1),
-            currentNumber: playedCardsPile[0].charAt(0),
-            playedCardsPile: [...playedCardsPile],
+            currentColor: pilaDeCartas[0].charAt(1),
+            currentNumber: pilaDeCartas[0].charAt(0),
+            pilaDeCartas: [...pilaDeCartas],
             drawCardPile: [...drawCardPile]
         })
     }, [])
@@ -98,14 +98,14 @@ const Gamepage = (props) => {
         socket.on("salaData", ({ users }) => {
             setUsers(users)
         })
-        socket.on('initGameState', ({ gameOver, turn, mano1, mano2, currentColor, currentNumber, playedCardsPile, drawCardPile }) => {
+        socket.on('initGameState', ({ gameOver, turno, mano1, mano2, currentColor, currentNumber, pilaDeCartas, drawCardPile }) => {
             setGameOver(gameOver)
-            setTurn(turn)
+            setturno(turno)
             setbaraja1(mano1)
             setbaraja2(mano2)
             setCurrentColor(currentColor)
             setCurrentNumber(currentNumber)
-            setPlayedCardsPile(playedCardsPile)
+            setpilaDeCartas(pilaDeCartas)
             setDrawCardPile(drawCardPile)
         })
         socket.on('currentUserData', ({ name }) => {
@@ -120,7 +120,7 @@ const Gamepage = (props) => {
                 <h1>{sala}</h1>
                 {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: 
                 <>
-                    {gameOver ? <h1>Fin del juego, gano {winner}</h1> :
+                    {gameOver ? <h1>Fin del juego, gano {ganador}</h1> :
                     <>
                         {currentUser === 'Player 1' ? 
                          <>
@@ -135,10 +135,10 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            {playedCardsPile && playedCardsPile.length>0 ? <>
+                            {pilaDeCartas && pilaDeCartas.length>0 ? <>
                                 <img
                                 style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${playedCardsPile[playedCardsPile.length-1]}.png`).default}
+                                src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
                                 />
                             </>:<></>}
                             <br></br>
@@ -166,10 +166,10 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            {playedCardsPile && playedCardsPile.length>0 ? <>
+                            {pilaDeCartas && pilaDeCartas.length>0 ? <>
                                 <img
                                 style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${playedCardsPile[playedCardsPile.length-1]}.png`).default}
+                                src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
                                 />
                             </>:<></>}
                             <br></br>
