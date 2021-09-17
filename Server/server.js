@@ -2,12 +2,12 @@ const express = require('express')
 const socketio = require('socket.io')
 const users = []
 
-const addUser = ({id, name, room}) => {
-    const numberOfUsersInRoom = users.filter(user => user.room === room).length
-    if(numberOfUsersInRoom === 4)
+const addUser = ({id, name, sala}) => {
+    const numberOfUsersInsala = users.filter(user => user.sala === sala).length
+    if(numberOfUsersInsala === 4)
     return { error: 'llena' }
 
-    const newUser = { id, name, room }
+    const newUser = { id, name, sala }
     users.push(newUser)
     return { newUser }
 }
@@ -23,8 +23,8 @@ const getUser = id => {
     return users.find(user => user.id === id)
 }
 
-const getUsersInRoom = room => {
-    return users.filter(user => user.room === room)
+const getUsersInsala = sala => {
+    return users.filter(user => user.sala === sala)
 }
 const path = require('path')
 
@@ -44,15 +44,15 @@ io.on('connection', (socket) => {
     console.log("se conecto alguien " , socket.id)
 
     socket.on('join', (data, callback) => {
-        let numberOfUsersInRoom = getUsersInRoom(data.room).length
-        if(numberOfUsersInRoom <= 1){
+        let numberOfUsersInsala = getUsersInsala(data.sala).length
+        if(numberOfUsersInsala <= 1){
         const { error, newUser} = addUser({
             id: socket.id,
-            name: numberOfUsersInRoom===0 ? 'Player 1' : 'Player 2',
-            room: data.room
+            name: numberOfUsersInsala===0 ? 'Player 1' : 'Player 2',
+            sala: data.sala
         })
-        socket.join(newUser.room)
-        io.to(newUser.room).emit('roomData', {room: newUser.room, users: getUsersInRoom(newUser.room)})
+        socket.join(newUser.sala)
+        io.to(newUser.sala).emit('salaData', {sala: newUser.sala, users: getUsersInsala(newUser.sala)})
         socket.emit('currentUserData', {name: newUser.name})
         }else{
             return callback("no se puede")
@@ -62,15 +62,15 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
-        console.log("se desconecto el usuario: ", user.name, " del room : ", user.room)
+        console.log("se desconecto el usuario: ", user.name, " del sala : ", user.sala)
         if(user)
-            io.to(user.room).emit('roomData', {room: user.room, users: getUsersInRoom(user.room)})
+            io.to(user.sala).emit('salaData', {sala: user.sala, users: getUsersInsala(user.sala)})
     })
 
     socket.on('initGameState', gameState => {
         const user = getUser(socket.id)
         if(user)
-            io.to(user.room).emit('initGameState', gameState)
+            io.to(user.sala).emit('initGameState', gameState)
     })
 })
 

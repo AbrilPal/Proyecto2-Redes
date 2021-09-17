@@ -27,17 +27,17 @@ const Gamepage = (props) => {
     // los estados del juego 
     const [sala, setsala] = useState(data.salaCode)
     const [salaFull, setsalaFull] = useState(false)
-    const [usuarioActual, setusuarioActual] = useState('')
+    const [currentUser, setCurrentUser] = useState('')
     const [users, setUsers] = useState([])
     const [gameOver, setGameOver] = useState(true)
     const [baraja1, setbaraja1] = useState([])
     const [baraja2, setbaraja2] = useState([])
     const [currentColor, setCurrentColor] = useState('')
     const [currentNumber, setCurrentNumber] = useState('')
-    const [ganador, setganador] = useState()
-    const [pilaCards, setpilaCards] = useState([])
-    const [pilaCardsActual, setpilaCardsActual] = useState([])
-    const [turno, setturno] = useState('')
+    const [winner, setWinner] = useState()
+    const [playedCardsPile, setPlayedCardsPile] = useState([])
+    const [drawCardPile, setDrawCardPile] = useState([])
+    const [turn, setTurn] = useState('')
     let socket
     const ENDPOINT = 'http://localhost:1800'
 
@@ -78,19 +78,19 @@ const Gamepage = (props) => {
                  break;
          }
  
-         const pilaCards = shuffledCards.splice(startingCardIndex, 1)
+         const playedCardsPile = shuffledCards.splice(startingCardIndex, 1)
  
-         const pilaCardsActual = shuffledCards
+         const drawCardPile = shuffledCards
 
         socket.emit('initGameState', {
             gameOver: false,
-            turno: 'Player 1',
+            turn: 'Player 1',
             mano1: [...mano1],
             mano2: [...mano2],
-            currentColor: pilaCards[0].charAt(1),
-            currentNumber: pilaCards[0].charAt(0),
-            pilaCards: [...pilaCards],
-            pilaCardsActual: [...pilaCardsActual]
+            currentColor: playedCardsPile[0].charAt(1),
+            currentNumber: playedCardsPile[0].charAt(0),
+            playedCardsPile: [...playedCardsPile],
+            drawCardPile: [...drawCardPile]
         })
     }, [])
 
@@ -98,18 +98,18 @@ const Gamepage = (props) => {
         socket.on("salaData", ({ users }) => {
             setUsers(users)
         })
-        socket.on('initGameState', ({ gameOver, turno, mano1, mano2, currentColor, currentNumber, pilaCards, pilaCardsActual }) => {
+        socket.on('initGameState', ({ gameOver, turn, mano1, mano2, currentColor, currentNumber, playedCardsPile, drawCardPile }) => {
             setGameOver(gameOver)
-            setturno(turno)
+            setTurn(turn)
             setbaraja1(mano1)
             setbaraja2(mano2)
             setCurrentColor(currentColor)
             setCurrentNumber(currentNumber)
-            setpilaCards(pilaCards)
-            setpilaCardsActual(pilaCardsActual)
+            setPlayedCardsPile(playedCardsPile)
+            setDrawCardPile(drawCardPile)
         })
-        socket.on('usuarioActualData', ({ name }) => {
-            setusuarioActual(name)
+        socket.on('currentUserData', ({ name }) => {
+            setCurrentUser(name)
         })
     }, [])
     return (
@@ -120,9 +120,9 @@ const Gamepage = (props) => {
                 <h1>{sala}</h1>
                 {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: 
                 <>
-                    {gameOver ? <h1>Fin del juego, gano {ganador}</h1> :
+                    {gameOver ? <h1>Fin del juego, gano {winner}</h1> :
                     <>
-                        {usuarioActual === 'Player 1' ? 
+                        {currentUser === 'Player 1' ? 
                          <>
                             <p className='playerDeckText'>Player 2</p>
                             {baraja2.map((item, i) => (
@@ -135,10 +135,10 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            {pilaCards && pilaCards.length>0 ? <>
+                            {playedCardsPile && playedCardsPile.length>0 ? <>
                                 <img
                                 style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${pilaCards[pilaCards.length-1]}.png`).default}
+                                src={require(`../imagenes/${playedCardsPile[playedCardsPile.length-1]}.png`).default}
                                 />
                             </>:<></>}
                             <br></br>
@@ -153,7 +153,7 @@ const Gamepage = (props) => {
                             ))}
                         </>:<></>} 
 
-                        {usuarioActual === 'Player 2' ? 
+                        {currentUser === 'Player 2' ? 
                          <>
                             <p className='playerDeckText'>Player 1</p>
                             {baraja1.map((item, i) => (
@@ -166,10 +166,10 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            {pilaCards && pilaCards.length>0 ? <>
+                            {playedCardsPile && playedCardsPile.length>0 ? <>
                                 <img
                                 style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${pilaCards[pilaCards.length-1]}.png`).default}
+                                src={require(`../imagenes/${playedCardsPile[playedCardsPile.length-1]}.png`).default}
                                 />
                             </>:<></>}
                             <br></br>

@@ -12,21 +12,21 @@ function makeid(length) {
 }
 
 const Homepage = () => {
-    const [roomCode, setRoomCode] = useState('')
+    const [salaCode, setsalaCode] = useState('')
 
     return (
         <div className='Homepage'>
             <div className='homepage-menu'>
                 <div className='homepage-form'>
                     <div className='homepage-join'>
-                        <input type='text' placeholder='Codigo de la sala' onChange={(event) => setRoomCode(event.target.value)} />
-                        <Link to={`/play?roomCode=${roomCode}`}>
+                        <input type='text' placeholder='Codigo de la sala' onChange={(event) => setsalaCode(event.target.value)} />
+                        <Link to={`/play?salaCode=${salaCode}`}>
                             <button className="game-button green">Unirse</button>
                         </Link>
                     </div>
                     <h1>O</h1>
                     <div className='homepage-create'>
-                        <Link to={`/play?roomCode=${makeid(5)}`}>
+                        <Link to={`/play?salaCode=${makeid(5)}`}>
                             <button className="game-button orange">Nueva sala</button>
                         </Link>
                     </div>
