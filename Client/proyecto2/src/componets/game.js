@@ -50,8 +50,10 @@ const Gamepage = (props) => {
         }
         socket = io.connect(ENDPOINT, connectionOptions)
         socket.emit('join', {sala: sala}, (error) => {
-            if(error)
+            if(error){
+                console.log(error)
                 setsalaFull(true)
+            }
         })
         return function desconectar() {
             socket.emit('disconnect')
@@ -114,11 +116,13 @@ const Gamepage = (props) => {
     }, [])
     return (
         <div style={{'backgroundColor': "pink"}} >
+             {console.log(salaFull)}
             <a href='/'><button className="game-button red">Salir del juego</button></a>
              {(!salaFull) ? 
              <>
+                {console.log(salaFull)}
                 <h1>{sala}</h1>
-                {users.length===1 ?<h1>Espera a que se unan los otros jugadores</h1>: 
+                {users.length <=2 ?<h1>Espera a que se unan los otros jugadores</h1>: 
                 <>
                     {gameOver ? <h1>Fin del juego, gano {ganador}</h1> :
                     <>
