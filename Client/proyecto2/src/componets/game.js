@@ -32,6 +32,7 @@ const Gamepage = (props) => {
     const [gameOver, setGameOver] = useState(true)
     const [baraja1, setbaraja1] = useState([])
     const [baraja2, setbaraja2] = useState([])
+    const [baraja3, setbaraja3] = useState([])
     const [colorActual, setcolorActual] = useState('')
     const [numerActual, setnumerActual] = useState('')
     const [ganador, setganador] = useState()
@@ -65,6 +66,7 @@ const Gamepage = (props) => {
         const shuffledCards = shuffleCartas(paqueteDeCartas)
         const mano1 = shuffledCards.splice(0,7)
         const mano2 = shuffledCards.splice(0,7)
+        const mano3 = shuffledCards.splice(0,7)
 
          let startingCardIndex
          while(true) {
@@ -89,6 +91,7 @@ const Gamepage = (props) => {
             turno: 'Player 1',
             mano1: [...mano1],
             mano2: [...mano2],
+            mano3: [...mano3],
             colorActual: pilaDeCartas[0].charAt(1),
             numerActual: pilaDeCartas[0].charAt(0),
             pilaDeCartas: [...pilaDeCartas],
@@ -100,11 +103,12 @@ const Gamepage = (props) => {
         socket.on("salaData", ({ users }) => {
             setUsers(users)
         })
-        socket.on('initGameState', ({ gameOver, turno, mano1, mano2, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
+        socket.on('initGameState', ({ gameOver, turno, mano1, mano2,mano3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             setGameOver(gameOver)
             setturno(turno)
             setbaraja1(mano1)
             setbaraja2(mano2)
+            setbaraja3(mano3)
             setcolorActual(colorActual)
             setnumerActual(numerActual)
             setpilaDeCartas(pilaDeCartas)
@@ -130,6 +134,16 @@ const Gamepage = (props) => {
                          <>
                             <p className='playerDeckText'>Player 2</p>
                             {baraja2.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "30px", 'height': "50px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/card-back.png`).default}
+                                    />
+                            ))}
+                            <br></br>
+                            <br></br>
+                            {baraja3.map((item, i) => (
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
