@@ -184,6 +184,16 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
+                            {baraja3.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "30px", 'height': "50px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/card-back.png`).default}
+                                    />
+                            ))}
+                            <br></br>
+                            <br></br>
                             {pilaDeCartas && pilaDeCartas.length>0 ? <>
                                 <img
                                 style={{'width': "80px", 'height': "100px"}}
