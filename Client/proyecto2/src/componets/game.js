@@ -184,6 +184,7 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
+                            <p className='playerDeckText'>Player 3</p>
                             {baraja3.map((item, i) => (
                                 <img
                                     key={i}
@@ -203,6 +204,48 @@ const Gamepage = (props) => {
                             <br></br>
                             <br></br>
                             {baraja2.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "50px", 'height': "70px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/${item}.png`).default}
+                                    />
+                            ))}
+                        </>:<></>} 
+
+                        {currentUser === 'Player 3' ? 
+                         <>
+                            <p className='playerDeckText'>Player 1</p>
+                            {baraja1.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "30px", 'height': "50px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/card-back.png`).default}
+                                    />
+                            ))}
+                            <br></br>
+                            <br></br>
+                            <p className='playerDeckText'>Player 2</p>
+                            {baraja2.map((item, i) => (
+                                <img
+                                    key={i}
+                                    style={{'width': "30px", 'height': "50px"}}
+                                    // onClick={() => onCardPlayedHandler(item)}
+                                    src={require(`../imagenes/card-back.png`).default}
+                                    />
+                            ))}
+                            <br></br>
+                            <br></br>
+                            {pilaDeCartas && pilaDeCartas.length>0 ? <>
+                                <img
+                                style={{'width': "80px", 'height': "100px"}}
+                                src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
+                                />
+                            </>:<></>}
+                            <br></br>
+                            <br></br>
+                            {baraja3.map((item, i) => (
                                 <img
                                     key={i}
                                     style={{'width': "50px", 'height': "70px"}}
