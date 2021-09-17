@@ -114,6 +114,7 @@ const Gamepage = (props) => {
     }, [])
     return (
         <div style={{'backgroundColor': "pink"}} >
+            <a href='/'><button className="game-button red">Salir del juego</button></a>
              {(!roomFull) ? 
              <>
                 <h1>{room}</h1>
@@ -132,6 +133,14 @@ const Gamepage = (props) => {
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
+                            <br></br>
+                            <br></br>
+                            {playedCardsPile && playedCardsPile.length>0 ? <>
+                                <img
+                                style={{'width': "80px", 'height': "100px"}}
+                                src={require(`../imagenes/${playedCardsPile[playedCardsPile.length-1]}.png`).default}
+                                />
+                            </>:<></>}
                             <br></br>
                             <br></br>
                             {player1Deck.map((item, i) => (
@@ -157,7 +166,14 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            
+                            {playedCardsPile && playedCardsPile.length>0 ? <>
+                                <img
+                                style={{'width': "80px", 'height': "100px"}}
+                                src={require(`../imagenes/${playedCardsPile[playedCardsPile.length-1]}.png`).default}
+                                />
+                            </>:<></>}
+                            <br></br>
+                            <br></br>
                             {player2Deck.map((item, i) => (
                                 <img
                                     key={i}
