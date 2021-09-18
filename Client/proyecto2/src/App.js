@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <Router>
         <Route path='/' exact component={Homepage} />
-        <Route path='/play' exact component={gamepage} />
+        <Route path="/play/:id/:idUser" exact component={gamepage} />
       </Router>
     </div>
   );

@@ -62,8 +62,8 @@ const Homepage = () => {
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>esta carta representa los cuatro colores y se puede colocar en cualquier carta. El jugador debe indicar qué color representará para el siguiente jugador.</p>
             <br></br>
+
             <TextField label="Nombre de usuario" color="secondary" focused onChange={(event) => {
-                const valorInput = document.getElementById("botonInput").value
                 if (event.target.value){
                     setUserName(event.target.value)
                     setNombre(true)
@@ -78,7 +78,6 @@ const Homepage = () => {
             <Stack spacing={2} direction="row" justifyContent="center">
                 <Stack spacing={2} direction="row" >
                     <TextField label="Código de sala" color="secondary" focused onChange={(event) => {
-                        const valorInput = document.getElementById("botonInput").value
                         if (event.target.value){
                             setsalaCode(event.target.value)
                             setEstado(true)
@@ -86,25 +85,25 @@ const Homepage = () => {
                             setEstado(false)
                         }
                         }} size='small'/>
-                    {estado ? <Button color="secondary" id="botonInput" variant="outlined"  href={`/play?salaCode=${salaCode}`}>Unirse</Button>:
-                    <Button color="secondary" id="botonInput" disabled variant="outlined"  href={`/play?salaCode=${salaCode}`}>Unirse</Button>
+                    {estado ? <Button color="secondary" id="botonInput" variant="outlined"  href={`/play/${salaCode}/${userName}`}>Unirse</Button>:
+                    <Button color="secondary" id="botonInput" disabled variant="outlined"  href={`/play/${salaCode}/${userName}`}>Unirse</Button>
                     }
                     
                 </Stack>
                 <h4>O</h4>
                 <div className='homepage-create'>
-                    <Button color="secondary" variant="outlined" href={`/play?salaCode=${makeid(5)}`}>Nueva sala</Button>
+                    <Button color="secondary" variant="outlined" href={`/play/${makeid(5)}/${userName}`}>Nueva sala</Button>
                 </div>
             </Stack> 
             :
             <Stack spacing={2} direction="row" justifyContent="center" disabled>
                 <Stack spacing={2} direction="row" >
                     <TextField label="Código de sala" disabled color="secondary" focused size='small'/>
-                    <Button color="secondary" id="botonInput" disabled variant="outlined"  href={`/play?salaCode=${salaCode}`}>Unirse</Button>
+                    <Button color="secondary" id="botonInput" disabled variant="outlined" >Unirse</Button>
                 </Stack>
                 <h4>O</h4>
                 <div className='homepage-create'>
-                    <Button color="secondary" variant="outlined" disabled href={`/play?salaCode=${makeid(5)}`}>Nueva sala</Button>
+                    <Button color="secondary" variant="outlined" disabled >Nueva sala</Button>
                 </div>
         </Stack> 
             }

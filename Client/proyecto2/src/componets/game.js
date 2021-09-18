@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 import queryString from 'query-string'
 import Button from '@mui/material/Button';
+import {useParams } from 'react-router-dom';
 
 function shuffleCartas(array) { 
     for (var i = array.length - 1; i > 0; i--) {
@@ -24,9 +25,10 @@ const Gamepage = (props) => {
         'W', 'W', 'W', 'W', 'D4W', 'D4W', 'D4W', 'D4W'
     ]
 
-    const data = queryString.parse(props.location.search)
+    const {id} = useParams()
+    const {idUser} = useParams();
     // los estados del juego 
-    const [sala, setsala] = useState(data.salaCode)
+    const [sala, setsala] = useState(id)
     const [salaFull, setsalaFull] = useState(false)
     const [currentUser, setCurrentUser] = useState('')
     const [users, setUsers] = useState([])
