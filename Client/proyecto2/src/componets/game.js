@@ -29,9 +29,14 @@ const Gamepage = (props) => {
     const {idUser} = useParams();
     // los estados del juego 
     const [sala, setsala] = useState(id)
+    const [userName, setuserName] = useState(idUser)
     const [salaFull, setsalaFull] = useState(false)
     const [currentUser, setCurrentUser] = useState('')
+    const [currentUserName, setCurrentUserName] = useState('')
     const [users, setUsers] = useState([])
+    const [usuario1, setUsuario1] = useState('')
+    const [usuario2, setUsuario2] = useState('')
+    const [usuario3, setUsuario3] = useState('')
     const [gameOver, setGameOver] = useState(true)
     const [baraja1, setbaraja1] = useState([])
     const [baraja2, setbaraja2] = useState([])
@@ -53,9 +58,8 @@ const Gamepage = (props) => {
         "transports" : ["websocket"]
         }
         socket = io.connect(ENDPOINT, connectionOptions)
-        socket.emit('join', {sala: sala}, (error) => {
+        socket.emit('join', {sala: sala, userName: userName}, (error) => {
             if(error){
-                console.log(error)
                 setsalaFull(true)
             }
         })
@@ -105,6 +109,15 @@ const Gamepage = (props) => {
     useEffect(() => {
         socket.on("salaData", ({ users }) => {
             setUsers(users)
+            users.map((item) => {
+                if(item.name == 'Player 2'){
+                    setUsuario2(item.userName)
+                }else if(item.name == 'Player 1'){
+                    setUsuario1(item.userName)
+                }else{
+                    setUsuario3(item.userName)
+                }
+            })
         })
         socket.on('initGameState', ({ gameOver, turno, mano1, mano2,mano3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             setGameOver(gameOver)
@@ -117,17 +130,18 @@ const Gamepage = (props) => {
             setpilaDeCartas(pilaDeCartas)
             setdrawPilaCartas(drawPilaCartas)
         })
-        socket.on('currentUserData', ({ name }) => {
+        socket.on('currentUserData', ({ userName, name }) => {
+            console.log(userName)
+            console.log(name)
+            setCurrentUserName(userName)
             setCurrentUser(name)
         })
     }, [])
     return (
         <div style={{"minHeight": '624px'}}>
-             {console.log(salaFull)}
              <Button href='/' variant="contained" color="error" size="small">Salir del juego</Button>
              {(!salaFull) ? 
              <>
-                {console.log(salaFull)}
                 <h1>{sala}</h1>
                 {users.length <=2 ?<h1>Espera a que se unan los otros jugadores</h1>: 
                 <>
@@ -135,7 +149,7 @@ const Gamepage = (props) => {
                     <>
                         {currentUser === 'Player 1' ? 
                          <>
-                            <p className='playerDeckText'>Player 2</p>
+                            <p className='playerDeckText'>{usuario2}</p>
                             {baraja2.map((item, i) => (
                                 <img
                                     key={i}
@@ -146,6 +160,7 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
+                            <p className='playerDeckText'>{usuario3}</p>
                             {baraja3.map((item, i) => (
                                 <img
                                     key={i}
@@ -164,6 +179,7 @@ const Gamepage = (props) => {
                             </>:<></>}
                             <br></br>
                             <br></br>
+                            <p className='playerDeckText'>{usuario1}</p>
                             {baraja1.map((item, i) => (
                                 <img
                                     key={i}
@@ -176,7 +192,7 @@ const Gamepage = (props) => {
 
                         {currentUser === 'Player 2' ? 
                          <>
-                            <p className='playerDeckText'>Player 1</p>
+                            <p className='playerDeckText'>{usuario1}</p>
                             {baraja1.map((item, i) => (
                                 <img
                                     key={i}
@@ -187,7 +203,7 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            <p className='playerDeckText'>Player 3</p>
+                            <p className='playerDeckText'>{usuario3}</p>
                             {baraja3.map((item, i) => (
                                 <img
                                     key={i}
@@ -206,6 +222,7 @@ const Gamepage = (props) => {
                             </>:<></>}
                             <br></br>
                             <br></br>
+                            <p className='playerDeckText'>{usuario2}</p>
                             {baraja2.map((item, i) => (
                                 <img
                                     key={i}
@@ -218,7 +235,7 @@ const Gamepage = (props) => {
 
                         {currentUser === 'Player 3' ? 
                          <>
-                            <p className='playerDeckText'>Player 1</p>
+                            <p className='playerDeckText'>{usuario1}</p>
                             {baraja1.map((item, i) => (
                                 <img
                                     key={i}
@@ -229,7 +246,7 @@ const Gamepage = (props) => {
                             ))}
                             <br></br>
                             <br></br>
-                            <p className='playerDeckText'>Player 2</p>
+                            <p className='playerDeckText'>{usuario2}</p>
                             {baraja2.map((item, i) => (
                                 <img
                                     key={i}
@@ -248,6 +265,7 @@ const Gamepage = (props) => {
                             </>:<></>}
                             <br></br>
                             <br></br>
+                            <p className='playerDeckText'>{usuario3}</p>
                             {baraja3.map((item, i) => (
                                 <img
                                     key={i}

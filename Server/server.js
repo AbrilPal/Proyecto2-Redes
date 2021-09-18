@@ -2,12 +2,12 @@ const express = require('express')
 const socketio = require('socket.io')
 const users = []
 
-const addUser = ({id, name, sala}) => {
+const addUser = ({id, name, sala, userName}) => {
     const numberOfUsersInsala = users.filter(user => user.sala === sala).length
     if(numberOfUsersInsala === 3)
     return { error: 'llena' }
 
-    const newUser = { id, name, sala }
+    const newUser = { id, name, sala, userName }
     users.push(newUser)
     return { newUser }
 }
@@ -56,7 +56,8 @@ io.on('connection', (socket) => {
         const { error, newUser} = addUser({
             id: socket.id,
             name: nombre,
-            sala: data.sala
+            sala: data.sala,
+            userName: data.userName
         })
 
         if(error){
@@ -64,14 +65,14 @@ io.on('connection', (socket) => {
         else{ 
             socket.join(newUser.sala)
             io.to(newUser.sala).emit('salaData', {sala: newUser.sala, users: getUsersInsala(newUser.sala)})
-            socket.emit('currentUserData', {name: newUser.name})
+            socket.emit('currentUserData', { userName: newUser.userName, name: newUser.name})
             callback()}
        
     })
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
-        console.log("se desconecto el usuario: ", user.name, " del sala : ", user.sala)
+        console.log("se desconecto el usuario: ", user.name , user.userName, " del sala : ", user.sala)
         if(user)
             io.to(user.sala).emit('salaData', {sala: user.sala, users: getUsersInsala(user.sala)})
     })
