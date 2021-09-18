@@ -2,6 +2,7 @@ import React, { useState, useEffect} from 'react'
 import { Link } from 'react-router-dom'
 import io from 'socket.io-client'
 import queryString from 'query-string'
+import Button from '@mui/material/Button';
 
 function shuffleCartas(array) { 
     for (var i = array.length - 1; i > 0; i--) {
@@ -119,9 +120,9 @@ const Gamepage = (props) => {
         })
     }, [])
     return (
-        <div style={{'backgroundColor': "pink"}} >
+        <div style={{"minHeight": '624px'}}>
              {console.log(salaFull)}
-            <a href='/'><button className="game-button red">Salir del juego</button></a>
+             <Button href='/' variant="contained" color="error" size="small">Salir del juego</Button>
              {(!salaFull) ? 
              <>
                 {console.log(salaFull)}
