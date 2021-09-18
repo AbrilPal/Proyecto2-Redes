@@ -16,6 +16,7 @@ function makeid(length) {
 
 const Homepage = () => {
     const [salaCode, setsalaCode] = useState('')
+    const [estado, setEstado] = useState(false)
 
     return (
         <div className='Homepage'>
@@ -61,8 +62,19 @@ const Homepage = () => {
             <br></br>
             <Stack spacing={2} direction="row" justifyContent="center">
                 <Stack spacing={2} direction="row" >
-                    <TextField label="Código de sala" color="secondary" focused onChange={(event) => setsalaCode(event.target.value)} size='small'/>
-                    <Button color="secondary" variant="outlined" href={`/play?salaCode=${salaCode}`}>Unirse</Button>
+                    <TextField label="Código de sala" color="secondary" focused onChange={(event) => {
+                        const valorInput = document.getElementById("botonInput").value
+                        if (event.target.value){
+                            setsalaCode(event.target.value)
+                            setEstado(true)
+                        }else{
+                            setEstado(false)
+                        }
+                        }} size='small'/>
+                    {estado ? <Button color="secondary" id="botonInput" variant="outlined"  href={`/play?salaCode=${salaCode}`}>Unirse</Button>:
+                    <Button color="secondary" id="botonInput" disabled variant="outlined"  href={`/play?salaCode=${salaCode}`}>Unirse</Button>
+                    }
+                    
                 </Stack>
                 <h4>O</h4>
                 <div className='homepage-create'>
