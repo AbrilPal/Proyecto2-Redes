@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 function makeid(length) {
     var result  = '';
@@ -55,22 +58,19 @@ const Homepage = () => {
             src={require(`../imagenes/W.png`).default}
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>esta carta representa los cuatro colores y se puede colocar en cualquier carta. El jugador debe indicar qué color representará para el siguiente jugador.</p>
-            <div className='homepage-menu'>
-                <div className='homepage-form'>
-                    <div className='homepage-join'>
-                        <input type='text' placeholder='Codigo de la sala' onChange={(event) => setsalaCode(event.target.value)} />
-                        <Link to={`/play?salaCode=${salaCode}`}>
-                            <button className="game-button green">Unirse</button>
-                        </Link>
-                    </div>
-                    <h1>O</h1>
-                    <div className='homepage-create'>
-                        <Link to={`/play?salaCode=${makeid(5)}`}>
-                            <button className="game-button orange">Nueva sala</button>
-                        </Link>
-                    </div>
+            <br></br>
+            <Stack spacing={2} direction="row" justifyContent="center">
+                <Stack spacing={2} direction="row" >
+                    <TextField label="Código de sala" color="secondary" focused onChange={(event) => setsalaCode(event.target.value)} size='small'/>
+                    <Button color="secondary" variant="outlined" href={`/play?salaCode=${salaCode}`}>Unirse</Button>
+                </Stack>
+                <h4>O</h4>
+                <div className='homepage-create'>
+                    <Button color="secondary" variant="outlined" href={`/play?salaCode=${makeid(5)}`}>Nueva sala</Button>
                 </div>
-            </div>
+            </Stack>
+            <br></br>
+            <br></br>
         </div>
     )
 }
