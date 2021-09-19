@@ -146,8 +146,6 @@ const Gamepage = (props) => {
             setdrawPilaCartas(drawPilaCartas)
         })
         socket.on('currentUserData', ({ userName, name }) => {
-            console.log(userName)
-            console.log(name)
             setCurrentUserName(userName)
             setCurrentUser(name)
         })
@@ -475,7 +473,6 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     
                                     />
@@ -487,7 +484,6 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -519,7 +515,6 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -530,7 +525,6 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -562,7 +556,6 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -573,7 +566,6 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
