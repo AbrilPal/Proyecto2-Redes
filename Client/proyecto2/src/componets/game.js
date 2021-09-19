@@ -204,7 +204,7 @@ const Gamepage = (props) => {
                         })
                     }
                 }
-                else if(colorActual === numeroCartaJugada){
+                else if(numeroCartaJugada === numeroCartaJugada){
                     console.log('Mismo numero')
                     if(cartaJugadaPor === 'Player 1'){
                         const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
