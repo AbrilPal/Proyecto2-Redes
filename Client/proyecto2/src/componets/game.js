@@ -106,6 +106,14 @@ const Gamepage = (props) => {
         })
     }, [])
 
+    const verGanador = (array) => {
+        return array.length === 1
+    }
+
+    const verFinJuego = (array, jugador) => {
+        return array.length === 1 ? jugador: ''
+    }
+
     useEffect(() => {
         socket.on("salaData", ({ users }) => {
             setUsers(users)
@@ -119,7 +127,7 @@ const Gamepage = (props) => {
                 }
             })
         })
-        socket.on('initGameState', ({ gameOver, turno, mano1, mano2,mano3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
+        socket.on('initGameState', ({ gameOver, turno, mano1, mano2, mano3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             setGameOver(gameOver)
             setturno(turno)
             setbaraja1(mano1)
@@ -136,9 +144,114 @@ const Gamepage = (props) => {
             setCurrentUserName(userName)
             setCurrentUser(name)
         })
+        socket.on('updateGameState', ({ gameOver, turno, mano1, mano2, mano3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
+            gameOver && setGameOver(gameOver)
+            turno && setturno(turno)
+            mano1 && setbaraja1(mano1)
+            mano2 && setbaraja2(mano2)
+            mano3 && setbaraja3(mano3)
+            colorActual && setcolorActual(colorActual)
+            numerActual && setnumerActual(numerActual)
+            pilaDeCartas && setpilaDeCartas(pilaDeCartas)
+            drawPilaCartas && setdrawPilaCartas(drawPilaCartas)
+        })
     }, [])
+
+    const cartaJugadaPorJugador = (cartaJugada) => {
+        const cartaJugadaPor = turno
+        switch(cartaJugada) {
+            case 'OR' : case '1R' : case '2R' : case '3R' : case '4R' : case '5R' : case '6R' : case '7R' : case '8R' : case '9R' : case '_R' : 
+            case 'OB' : case '1B' : case '2B' : case '3B' : case '4B' : case '5B' : case '6B' : case '7B' : case '8B' : case '9B' : case '_B' : 
+            case 'OY' : case '1Y' : case '2Y' : case '3Y' : case '4Y' : case '5Y' : case '6Y' : case '7Y' : case '8Y' : case '9Y' : case '_Y' : 
+            case 'OG' : case '1G' : case '2G' : case '3G' : case '4G' : case '5G' : case '6G' : case '7G' : case '8G' : case '9G' : case '_G' : 
+            {
+                const numeroCartaJugada = cartaJugada.charAt(0)
+                const colorCartaJugada = cartaJugada.charAt(1)
+
+                if(colorActual === colorCartaJugada){
+                    console.log("Mismo color")
+                    if(cartaJugadaPor === 'Player 1'){
+                        const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                        socket.emit('updateGameState', {
+                            gameOver: verFinJuego(baraja1),
+                            turno: 'Player 2',
+                            pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                            mano1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
+                            colorActual: colorCartaJugada,
+                            numerActual: numeroCartaJugada
+                        })
+                    }
+                    else if(cartaJugadaPor === 'Player 2'){
+                        const eliminarCartaDeBaraja = baraja2.indexOf(cartaJugada)
+                        socket.emit('updateGameState', {
+                            gameOver: verFinJuego(baraja2),
+                            turno: 'Player 3',
+                            pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                            baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
+                            colorActual: colorCartaJugada,
+                            numerActual: numeroCartaJugada
+                        })
+                    }
+                    else {
+                        const eliminarCartaDeBaraja = baraja3.indexOf(cartaJugada)
+                        socket.emit('updateGameState', {
+                            gameOver: verFinJuego(baraja3),
+                            turno: 'Player 1',
+                            pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                            baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
+                            colorActual: colorCartaJugada,
+                            numerActual: numeroCartaJugada
+                        })
+                    }
+                }
+                else if(colorActual === numeroCartaJugada){
+                    console.log('Mismo numero')
+                    if(cartaJugadaPor === 'Player 1'){
+                        const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                        socket.emit('updateGameState', {
+                            gameOver: verFinJuego(baraja1),
+                            turno: 'Player 2',
+                            pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                            baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
+                            colorActual: colorCartaJugada,
+                            numerActual: numeroCartaJugada
+                        })
+                    }
+                    else if(cartaJugadaPor === 'Player 2'){
+                        const eliminarCartaDeBaraja = baraja2.indexOf(cartaJugada)
+                        socket.emit('updateGameState', {
+                            gameOver: verFinJuego(baraja2),
+                            turno: 'Player 3',
+                            pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                            baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
+                            colorActual: colorCartaJugada,
+                            numerActual: numeroCartaJugada
+                        })
+                    }
+                    else {
+                        const eliminarCartaDeBaraja = baraja3.indexOf(cartaJugada)
+                        socket.emit('updateGameState', {
+                            gameOver: verFinJuego(baraja3),
+                            turno: 'Player 1',
+                            pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                            baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
+                            colorActual: colorCartaJugada,
+                            numerActual: numeroCartaJugada
+                        })
+                    }
+                }
+                else {
+                    alert('No se puede hacer')
+                }
+
+                break;
+            }
+        }
+        
+    }
+
     return (
-        <div style={{"minHeight": '624px'}}>
+        <div style={{"minHeight": '624px', 'height': '100vh'}}>
              <Button href='/' variant="contained" color="error" size="small">Salir del juego</Button>
              {(!salaFull) ? 
              <>
@@ -154,8 +267,9 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
+                                    
                                     />
                             ))}
                             <br></br>
@@ -165,7 +279,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -184,7 +298,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "50px", 'height': "70px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
@@ -197,7 +311,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -208,7 +322,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -227,7 +341,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "50px", 'height': "70px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
@@ -240,7 +354,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -251,7 +365,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "30px", 'height': "50px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/card-back.png`).default}
                                     />
                             ))}
@@ -270,7 +384,7 @@ const Gamepage = (props) => {
                                 <img
                                     key={i}
                                     style={{'width': "50px", 'height': "70px"}}
-                                    // onClick={() => onCardPlayedHandler(item)}
+                                    onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}

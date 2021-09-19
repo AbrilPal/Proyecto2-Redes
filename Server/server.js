@@ -82,6 +82,12 @@ io.on('connection', (socket) => {
         if(user)
             io.to(user.sala).emit('initGameState', gameState)
     })
+
+    socket.on('updateGameState', gameState => {
+        const user = getUser(socket.id)
+        if(user)
+            io.to(user.sala).emit('updateGameState', gameState)
+    })
 })
 
 
