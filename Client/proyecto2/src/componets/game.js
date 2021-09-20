@@ -39,6 +39,9 @@ const Gamepage = (props) => {
     const [userName, setuserName] = useState(idUser)
     const [salaFull, setsalaFull] = useState(false)
     const [currentUser, setCurrentUser] = useState('')
+    // chat
+    const [message, setMessage] = useState('')
+    const [messages, setMessages] = useState([])
     const [currentUserName, setCurrentUserName] = useState('')
     const [users, setUsers] = useState([])
     const [usuario1, setUsuario1] = useState('')
@@ -51,6 +54,10 @@ const Gamepage = (props) => {
     const [colorActual, setcolorActual] = useState('')
     const [numerActual, setnumerActual] = useState('')
     const [ganador, setganador] = useState()
+
+    const [isChatBoxHidden, setChatBoxHidden] = useState(true)
+
+    
     const [pilaDeCartas, setpilaDeCartas] = useState([])
     const [drawPilaCartas, setdrawPilaCartas] = useState([])
     const [turno, setturno] = useState('')
@@ -149,6 +156,14 @@ const Gamepage = (props) => {
             setCurrentUserName(userName)
             setCurrentUser(name)
         })
+
+        socket.on('message', message => {
+            setMessages(messages => [ ...messages, message ])
+
+            const chatBody = document.querySelector('.chat-body')
+            chatBody.scrollTop = chatBody.scrollHeight
+        })
+
         socket.on('updateGameState', ({ gameOver, turno, baraja1, baraja2, baraja3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             gameOver && setGameOver(gameOver)
             turno && setturno(turno)
@@ -161,7 +176,27 @@ const Gamepage = (props) => {
             drawPilaCartas && setdrawPilaCartas(drawPilaCartas)
         })
     }, [])
+    
+    const toggleChatBox = () => {
+        const chatBody = document.querySelector('.chat-body')
+        if(isChatBoxHidden) {
+            chatBody.style.display = 'block'
+            setChatBoxHidden(false)
+        }
+        else {
+            chatBody.style.display = 'none'
+            setChatBoxHidden(true)
+        }
+    }
 
+    const sendMessage= (event) => {
+        event.preventDefault()
+        if(message) {
+            socket.emit('sendMessage', { message: message }, () => {
+                setMessage('')
+            })
+        }
+    }
     const cartaJugadaPorJugador = (cartaJugada) => {
         const cartaJugadaPor = turno
         switch(cartaJugada) {
@@ -505,7 +540,37 @@ const Gamepage = (props) => {
                                     onClick={() => cartaJugadaPorJugador(item)}
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
+            
                             ))}
+                            <div className="chatBoxWrapper">
+                            <div className="chat-box chat-box-player1">
+                                <div className="chat-head">
+                                    <h2>Chat Box</h2>
+                                    <img
+                                        onClick={toggleChatBox}
+                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
+                                        title="Expand Arrow"
+                                        width="16" />
+                                </div>
+                                <div className="chat-body">
+                                    <div className="msg-insert">
+                                        {messages.map(msg => {
+                                            if(msg.user === 'Player 2')
+                                                return <div className="msg-receive">{msg.text}</div>
+                                            if(msg.user === 'Player 1')
+                                                return <div className="msg-send">{msg.text}</div>
+                                            if(msg.user === 'Player 3')
+                                                return <div className="msg-receive">{msg.text}</div>
+                                        })}
+                                    </div>
+                                    <div className="chat-text">
+                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+
+                        
                         </>:<></>} 
 
                         {currentUser === 'Player 2' ? 
@@ -547,6 +612,34 @@ const Gamepage = (props) => {
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
+
+                            <div className="chatBoxWrapper">
+                            <div className="chat-box chat-box-player2">
+                                <div className="chat-head">
+                                    <h2>Chat Box</h2>
+                                    <img
+                                        onClick={toggleChatBox}
+                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
+                                        title="Expand Arrow"
+                                        width="16" />
+                                </div>
+                                <div className="chat-body">
+                                    <div className="msg-insert">
+                                        {messages.map(msg => {
+                                            if(msg.user === 'Player 2')
+                                                return <div className="msg-send">{msg.text}</div>
+                                            if(msg.user === 'Player 1')
+                                                return <div className="msg-receive">{msg.text}</div>
+                                            if(msg.user === 'Player 3')
+                                                return <div className="msg-receive">{msg.text}</div>
+                                        })}
+                                    </div>
+                                    <div className="chat-text">
+                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                         </>:<></>} 
 
                         {currentUser === 'Player 3' ? 
@@ -588,6 +681,34 @@ const Gamepage = (props) => {
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
+
+                            <div className="chatBoxWrapper">
+                            <div className="chat-box chat-box-player3">
+                                <div className="chat-head">
+                                    <h2>Chat Box</h2>
+                                    <img
+                                        onClick={toggleChatBox}
+                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
+                                        title="Expand Arrow"
+                                        width="16" />
+                                </div>
+                                <div className="chat-body">
+                                    <div className="msg-insert">
+                                        {messages.map(msg => {
+                                            if(msg.user === 'Player 2')
+                                                return <div className="msg-receive">{msg.text}</div>
+                                            if(msg.user === 'Player 1')
+                                                return <div className="msg-receive">{msg.text}</div>
+                                            if(msg.user === 'Player 3')
+                                                return <div className="msg-send">{msg.text}</div>
+                                        })}
+                                    </div>
+                                    <div className="chat-text">
+                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
                         </>:<></>} 
 
                     </>
