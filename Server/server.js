@@ -88,6 +88,11 @@ io.on('connection', (socket) => {
         if(user)
             io.to(user.sala).emit('updateGameState', gameState)
     })
+
+    socket.on('sendMessage', (payload, callback) => {
+        const user = getUser(socket.id)
+        io.to(user.room).emit('message', {user: user.name, text: payload.message})
+        callback()
+    })
+
 })
-
-
