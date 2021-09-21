@@ -5,13 +5,6 @@ import queryString from 'query-string'
 import Button from '@mui/material/Button';
 import {useParams } from 'react-router-dom';
 
-// Action cards codes (to identify them)
-// Draw 2: 500
-// Skip: 600
-// Wild: 700
-// Wild Draw 4: 800
-// Reverse: 900
-
 function shuffleCartas(array) { 
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1))
@@ -56,15 +49,11 @@ const Gamepage = () => {
     const [colorActual, setcolorActual] = useState('')
     const [numerActual, setnumerActual] = useState('')
     const [ganador, setganador] = useState()
-
     const [isChatBoxHidden, setChatBoxHidden] = useState(true)
-
-    
     const [pilaDeCartas, setpilaDeCartas] = useState([])
     const [drawPilaCartas, setdrawPilaCartas] = useState([])
     const [turno, setturno] = useState('')
     
-
     useEffect(() => {
         const connectionOptions =  {
         "forceNew" : true, 
@@ -178,7 +167,6 @@ const Gamepage = () => {
         socket.on('message', (message) => {
             console.log("mensaje", message)
             setMessages(messages => [ ...messages, message ])
-
             const chatBody = document.querySelector('.chat-body')
             chatBody.scrollTop = chatBody.scrollHeight
         })
@@ -296,9 +284,6 @@ const Gamepage = () => {
 
                 break;
             }
-
-
-
 
             case 'D2R' : case 'D2B' : case 'D2Y' : case 'D2G' :
             {
@@ -418,9 +403,6 @@ const Gamepage = () => {
                 break;
             }
 
-
-            
-
             case 'skipR' : case 'skipB' : case 'skipY' : case 'skipG' :
             {
                 const colorCartaJugada = cartaJugada.charAt(4)
@@ -497,9 +479,6 @@ const Gamepage = () => {
                 break;
             }
 
-
-
-
             // Caso Wild, carta para cambiar el color
             case 'W' : 
             {
@@ -547,9 +526,6 @@ const Gamepage = () => {
                     })
                 }
             }
-
-
-
 
             // Caso Draw 4 Wild, carta para cambiar el color pero tambien dar 4 cartas
             case 'D4W' : 

@@ -14,7 +14,6 @@ const addUser = ({id, name, sala, userName}) => {
 
 const removeUser = id => {
     const removeIndex = users.findIndex(user => user.id === id)
-
     if(removeIndex!==-1)
         return users.splice(removeIndex, 1)[0]
 }
@@ -91,7 +90,6 @@ io.on('connection', (socket) => {
         const user = getUser(socket.id)
         const data = Object.values(user)
         io.to(data[2]).emit('message', {user: user.name, name: user.userName, text: payload.message})
-        console.log(data[2])
         callback()
     })
 
