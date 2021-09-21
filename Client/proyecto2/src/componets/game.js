@@ -24,7 +24,7 @@ function shuffleCartas(array) {
 let socket
 const ENDPOINT = 'http://localhost:1800'
 
-const Gamepage = (props) => {
+const Gamepage = () => {
 
     const paqueteDeCartas = [
         '0R', '1R', '1R', '2R', '2R', '3R', '3R', '4R', '4R', '5R', '5R', '6R', '6R', '7R', '7R', '8R', '8R', '9R', '9R', 'skipR', 'skipR', '_R', '_R', 'D2R', 'D2R',
@@ -34,6 +34,7 @@ const Gamepage = (props) => {
         'W', 'W', 'W', 'W', 'D4W', 'D4W', 'D4W', 'D4W'
     ]
 
+    // parametros de la url
     const {id} = useParams()
     const {idUser} = useParams();
     // los estados del juego 
@@ -152,6 +153,7 @@ const Gamepage = (props) => {
             setnumerActual(numerActual)
             setpilaDeCartas(pilaDeCartas)
             setdrawPilaCartas(drawPilaCartas)
+            console.log("init")
         })
         
         socket.on('currentUserData', ({ userName, name }) => {
@@ -159,12 +161,6 @@ const Gamepage = (props) => {
             setCurrentUser(name)
         })
 
-        socket.on('message', message => {
-            setMessages(messages => [ ...messages, message ])
-
-            const chatBody = document.querySelector('.chat-body')
-            chatBody.scrollTop = chatBody.scrollHeight
-        })
 
         socket.on('updateGameState', ({ gameOver, ganador, turno, baraja1, baraja2, baraja3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             gameOver && setGameOver(gameOver)
@@ -177,6 +173,14 @@ const Gamepage = (props) => {
             numerActual && setnumerActual(numerActual)
             pilaDeCartas && setpilaDeCartas(pilaDeCartas)
             drawPilaCartas && setdrawPilaCartas(drawPilaCartas)
+        })
+
+        socket.on('message', (message) => {
+            console.log("mensaje", message)
+            setMessages(messages => [ ...messages, message ])
+
+            const chatBody = document.querySelector('.chat-body')
+            chatBody.scrollTop = chatBody.scrollHeight
         })
     }, [])
     
@@ -674,7 +678,7 @@ const Gamepage = (props) => {
                             <div className="chatBoxWrapper">
                             <div className="chat-box chat-box-player1">
                                 <div className="chat-head">
-                                    <h2>Chat Box</h2>
+                                    <h2>Chat</h2>
                                     <img
                                         onClick={toggleChatBox}
                                         src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
