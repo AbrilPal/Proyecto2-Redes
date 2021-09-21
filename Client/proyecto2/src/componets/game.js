@@ -41,7 +41,6 @@ const Gamepage = (props) => {
     const [userName, setuserName] = useState(idUser)
     const [salaFull, setsalaFull] = useState(false)
     const [currentUser, setCurrentUser] = useState('')
-    // chat
     const [message, setMessage] = useState('')
     const [messages, setMessages] = useState([])
     const [currentUserName, setCurrentUserName] = useState('')
