@@ -179,8 +179,8 @@ const Gamepage = () => {
             console.log("mensaje", message)
             setMessages(messages => [ ...messages, message ])
 
-            const chatBody = document.querySelector('.chat-body')
-            chatBody.scrollTop = chatBody.scrollHeight
+            // const chatBody = document.querySelector('.chat-body')
+            // chatBody.scrollTop = chatBody.scrollHeight
         })
     }, [])
     
@@ -675,35 +675,19 @@ const Gamepage = () => {
                                     />
             
                             ))}
-                            <div className="chatBoxWrapper">
-                            <div className="chat-box chat-box-player1">
-                                <div className="chat-head">
-                                    <h2>Chat</h2>
-                                    <img
-                                        onClick={toggleChatBox}
-                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
-                                        title="Expand Arrow"
-                                        width="16" />
-                                </div>
-                                <div className="chat-body">
-                                    <div className="msg-insert">
-                                        {messages.map(msg => {
-                                            if(msg.user === 'Player 2')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                            if(msg.user === 'Player 1')
-                                                return <div className="msg-send">{msg.text}</div>
-                                            if(msg.user === 'Player 3')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                        })}
-                                    </div>
-                                    <div className="chat-text">
-                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                    </div>
-                                </div>
-                            </div>
+                            <br></br>
+                            <div>
+                                {console.log(messages)}
+                                {messages.map(msg => {
+                                    if(msg.user === 'Player 2')
+                                        return <p>{msg.user}</p>
+                                    if(msg.user === 'Player 1')
+                                        return <p>{msg.user}</p>
+                                    if(msg.user === 'Player 3')
+                                        return <p>{msg.user}</p>
+                                })}
                             </div>
 
-                        
                         </>:<></>} 
 
                         {currentUser === 'Player 2' ? 

@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
     socket.on('sendMessage', (payload, callback) => {
         const user = getUser(socket.id)
         const data = Object.values(user)
-        io.to(data[2]).emit('message', {user: user.userName, text: payload.message})
+        io.to(data[2]).emit('message', {user: user.name, name: user.userName, text: payload.message})
         console.log(data[2])
         callback()
     })
