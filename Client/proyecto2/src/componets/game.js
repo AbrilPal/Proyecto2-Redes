@@ -21,6 +21,8 @@ function shuffleCartas(array) {
     }   
     return array
 }
+let socket
+const ENDPOINT = 'http://localhost:1800'
 
 const Gamepage = (props) => {
 
@@ -61,8 +63,7 @@ const Gamepage = (props) => {
     const [pilaDeCartas, setpilaDeCartas] = useState([])
     const [drawPilaCartas, setdrawPilaCartas] = useState([])
     const [turno, setturno] = useState('')
-    let socket
-    const ENDPOINT = 'http://localhost:1800'
+    
 
     useEffect(() => {
         const connectionOptions =  {
@@ -89,18 +90,18 @@ const Gamepage = (props) => {
         const baraja2 = shuffledCards.splice(0,7)
         const baraja3 = shuffledCards.splice(0,7)
 
-         let startingCardIndex
-         while(true) {
-             startingCardIndex = Math.floor(Math.random() * 94)
-             if(shuffledCards[startingCardIndex]==='skipR' || shuffledCards[startingCardIndex]==='_R' || shuffledCards[startingCardIndex]==='D2R' ||
-             shuffledCards[startingCardIndex]==='skipG' || shuffledCards[startingCardIndex]==='_G' || shuffledCards[startingCardIndex]==='D2G' ||
-             shuffledCards[startingCardIndex]==='skipB' || shuffledCards[startingCardIndex]==='_B' || shuffledCards[startingCardIndex]==='D2B' ||
-             shuffledCards[startingCardIndex]==='skipY' || shuffledCards[startingCardIndex]==='_Y' || shuffledCards[startingCardIndex]==='D2Y' ||
-             shuffledCards[startingCardIndex]==='W' || shuffledCards[startingCardIndex]==='D4W') {
-                 continue;
-             }
-             else
-                 break;
+        let startingCardIndex
+        while(true) {
+            startingCardIndex = Math.floor(Math.random() * 94)
+            if(shuffledCards[startingCardIndex]==='skipR' || shuffledCards[startingCardIndex]==='_R' || shuffledCards[startingCardIndex]==='D2R' ||
+            shuffledCards[startingCardIndex]==='skipG' || shuffledCards[startingCardIndex]==='_G' || shuffledCards[startingCardIndex]==='D2G' ||
+            shuffledCards[startingCardIndex]==='skipB' || shuffledCards[startingCardIndex]==='_B' || shuffledCards[startingCardIndex]==='D2B' ||
+            shuffledCards[startingCardIndex]==='skipY' || shuffledCards[startingCardIndex]==='_Y' || shuffledCards[startingCardIndex]==='D2Y' ||
+            shuffledCards[startingCardIndex]==='W' || shuffledCards[startingCardIndex]==='D4W') {
+                continue;
+            }
+            else
+                break;
          }
  
          const pilaDeCartas = shuffledCards.splice(startingCardIndex, 1)
@@ -120,11 +121,11 @@ const Gamepage = (props) => {
         })
     }, [])
 
-    const verGanador = (array) => {
+    const verFinJuego = (array) => {
         return array.length === 1
     }
 
-    const verFinJuego = (array, jugador) => {
+    const verGanador = (array, jugador) => {
         return array.length === 1 ? jugador: ''
     }
 
@@ -141,6 +142,7 @@ const Gamepage = (props) => {
                 }
             })
         })
+        
         socket.on('initGameState', ({ gameOver, turno, baraja1, baraja2, baraja3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             setGameOver(gameOver)
             setturno(turno)
@@ -152,6 +154,7 @@ const Gamepage = (props) => {
             setpilaDeCartas(pilaDeCartas)
             setdrawPilaCartas(drawPilaCartas)
         })
+        
         socket.on('currentUserData', ({ userName, name }) => {
             setCurrentUserName(userName)
             setCurrentUser(name)
@@ -164,8 +167,9 @@ const Gamepage = (props) => {
             chatBody.scrollTop = chatBody.scrollHeight
         })
 
-        socket.on('updateGameState', ({ gameOver, turno, baraja1, baraja2, baraja3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
+        socket.on('updateGameState', ({ gameOver, ganador, turno, baraja1, baraja2, baraja3, colorActual, numerActual, pilaDeCartas, drawPilaCartas }) => {
             gameOver && setGameOver(gameOver)
+            ganador && setganador(ganador)
             turno && setturno(turno)
             baraja1 && setbaraja1(baraja1)
             baraja2 && setbaraja2(baraja2)
@@ -197,6 +201,7 @@ const Gamepage = (props) => {
             })
         }
     }
+
     const cartaJugadaPorJugador = (cartaJugada) => {
         const cartaJugadaPor = turno
         switch(cartaJugada) {
@@ -217,6 +222,8 @@ const Gamepage = (props) => {
                             turno: 'Player 2',
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                             baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
+                            // baraja2: [...baraja2],
+                            // baraja3: [...baraja3],
                             colorActual: colorCartaJugada,
                             numerActual: numeroCartaJugada
                         })
@@ -485,6 +492,129 @@ const Gamepage = (props) => {
                 }
 
                 break;
+            }
+
+
+
+
+            // Caso Wild, carta para cambiar el color
+            case 'W' : 
+            {
+                console.log("Carta Wild")
+                if(cartaJugadaPor === 'Player 1') {
+                    const nuevoColorCartaJugada = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                    console.log('Escogio la opcion', nuevoColorCartaJugada)
+                    const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+
+                    socket.emit('updateGameState', {
+                        gameOver: verFinJuego(baraja1),
+                        turno: 'Player 2',
+                        pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                        baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
+                        colorActual: nuevoColorCartaJugada,
+                        numerActual: 700
+                    })
+                }
+                else if(cartaJugadaPor === 'Player 2') {
+                    const nuevoColorCartaJugada = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                    console.log('Escogio la opcion', nuevoColorCartaJugada)
+                    const eliminarCartaDeBaraja = baraja2.indexOf(cartaJugada)
+
+                    socket.emit('updateGameState', {
+                        gameOver: verFinJuego(baraja2),
+                        turno: 'Player 3',
+                        pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                        baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
+                        colorActual: nuevoColorCartaJugada,
+                        numerActual: 700
+                    })
+                }
+                else {
+                    const nuevoColorCartaJugada = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                    console.log('Escogio la opcion', nuevoColorCartaJugada)
+                    const eliminarCartaDeBaraja = baraja3.indexOf(cartaJugada)
+
+                    socket.emit('updateGameState', {
+                        gameOver: verFinJuego(baraja3),
+                        turno: 'Player 1',
+                        pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                        baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
+                        colorActual: nuevoColorCartaJugada,
+                        numerActual: 700
+                    })
+                }
+            }
+
+
+
+
+            // Caso Draw 4 Wild, carta para cambiar el color pero tambien dar 4 cartas
+            case 'D4W' : 
+            {
+                console.log("Carta Draw 4 Wild")
+                if(cartaJugadaPor === 'Player 1') {
+                    const nuevoColorCartaJugada = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                    console.log('Escogio la opcion', nuevoColorCartaJugada)
+                    const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                    const copiaDrawPilaCartas = [...drawPilaCartas]
+
+                    const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta3 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta4 = copiaDrawPilaCartas.pop()
+
+                    socket.emit('updateGameState', {
+                        gameOver: verFinJuego(baraja1),
+                        pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                        baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
+                        baraja2: [...pilaDeCartas.slice(0, baraja2.lenght), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja2.slice(baraja2.length)],
+                        colorActual: nuevoColorCartaJugada,
+                        numerActual: 800,
+                        drawPilaCartas: [...copiaDrawPilaCartas]
+                    })
+                }
+                else if(cartaJugadaPor === 'Player 2') {
+                    const nuevoColorCartaJugada = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                    console.log('Escogio la opcion', nuevoColorCartaJugada)
+                    const eliminarCartaDeBaraja = baraja2.indexOf(cartaJugada)
+                    const copiaDrawPilaCartas = [...drawPilaCartas]
+
+                    const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta3 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta4 = copiaDrawPilaCartas.pop()
+
+                    socket.emit('updateGameState', {
+                        gameOver: verFinJuego(baraja2),
+                        pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                        baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
+                        baraja3: [...pilaDeCartas.slice(0, baraja3.lenght), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja3.slice(baraja3.length)],
+                        colorActual: nuevoColorCartaJugada,
+                        numerActual: 800,
+                        drawPilaCartas: [...copiaDrawPilaCartas]
+                    })
+                }
+                else {
+                    const nuevoColorCartaJugada = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                    console.log('Escogio la opcion', nuevoColorCartaJugada)
+                    const eliminarCartaDeBaraja = baraja3.indexOf(cartaJugada)
+                    const copiaDrawPilaCartas = [...drawPilaCartas]
+
+                    const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta3 = copiaDrawPilaCartas.pop()
+                    const drawPilaCarta4 = copiaDrawPilaCartas.pop()
+
+                    socket.emit('updateGameState', {
+                        gameOver: verFinJuego(baraja3),
+                        pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                        baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
+                        baraja1: [...pilaDeCartas.slice(0, baraja1.lenght), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja1.slice(baraja1.length)],
+                        colorActual: nuevoColorCartaJugada,
+                        numerActual: 800,
+                        drawPilaCartas: [...copiaDrawPilaCartas]
+                    })
+                }
             }
 
         }

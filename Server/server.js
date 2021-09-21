@@ -67,12 +67,10 @@ io.on('connection', (socket) => {
             io.to(newUser.sala).emit('salaData', {sala: newUser.sala, users: getUsersInsala(newUser.sala)})
             socket.emit('currentUserData', { userName: newUser.userName, name: newUser.name})
             callback()}
-       
     })
 
     socket.on('disconnect', () => {
         const user = removeUser(socket.id)
-        console.log("se desconecto el usuario: ", user.name , user.userName, " del sala : ", user.sala)
         if(user)
             io.to(user.sala).emit('salaData', {sala: user.sala, users: getUsersInsala(user.sala)})
     })
