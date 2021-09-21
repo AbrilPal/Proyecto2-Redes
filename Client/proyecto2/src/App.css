@@ -136,3 +136,8 @@
 .msg-receive:hover, .msg-send:hover{
 	opacity: .9;
 }
+
+.paginaGame{
+	display: grid;
+	grid-template-columns: 80% 20%;
+}

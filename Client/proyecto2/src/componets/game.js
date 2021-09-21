@@ -53,7 +53,7 @@ const Gamepage = () => {
     const [pilaDeCartas, setpilaDeCartas] = useState([])
     const [drawPilaCartas, setdrawPilaCartas] = useState([])
     const [turno, setturno] = useState('')
-    
+
     useEffect(() => {
         const connectionOptions =  {
         "forceNew" : true, 
@@ -611,57 +611,50 @@ const Gamepage = () => {
                     {gameOver ? <h1>Fin del juego, gano {ganador}</h1> :
                     <>
                         {currentUser === 'Player 1' ? 
-                         <>
-                            <p className='playerDeckText'>{usuario2}</p>
-                            {baraja2.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "30px", 'height': "50px"}}
-                                    src={require(`../imagenes/card-back.png`).default}
-                                    
-                                    />
-                            ))}
-                            <br></br>
-                            <br></br>
-                            <p className='playerDeckText'>{usuario3}</p>
-                            {baraja3.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "30px", 'height': "50px"}}
-                                    src={require(`../imagenes/card-back.png`).default}
-                                    />
-                            ))}
-                            <br></br>
-                            <br></br>
-                            {pilaDeCartas && pilaDeCartas.length>0 ? <>
-                                <img
-                                style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
-                                />
-                            </>:<></>}
-                            <br></br>
-                            <br></br>
-                            <p className='playerDeckText'>{usuario1}</p>
-                            {baraja1.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "50px", 'height': "70px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
-                                    src={require(`../imagenes/${item}.png`).default}
-                                    />
-            
-                            ))}
-                            <div className="chatBoxWrapper">
-                            <div className="chat-box chat-box-player2">
-                                <div className="chat-head">
-                                    <h2>Chat Box</h2>
+                        <>
+                        <div className="paginaGame">
+                            <div>
+                                <p className='playerDeckText'>{usuario2}</p>
+                                {baraja2.map((item, i) => (
                                     <img
-                                        onClick={toggleChatBox}
-                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
-                                        title="Expand Arrow"
-                                        width="16" />
-                                </div>
-                                <div className="chat-body">
+                                        key={i}
+                                        style={{'width': "30px", 'height': "50px"}}
+                                        src={require(`../imagenes/card-back.png`).default}
+                                        
+                                        />
+                                ))}
+                                <br></br>
+                                <br></br>
+                                <p className='playerDeckText'>{usuario3}</p>
+                                {baraja3.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "30px", 'height': "50px"}}
+                                        src={require(`../imagenes/card-back.png`).default}
+                                        />
+                                ))}
+                                <br></br>
+                                <br></br>
+                                {pilaDeCartas && pilaDeCartas.length>0 ? <>
+                                    <img
+                                    style={{'width': "80px", 'height': "100px"}}
+                                    src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
+                                    />
+                                </>:<></>}
+                                <br></br>
+                                <br></br>
+                                <p className='playerDeckText'>{usuario1}</p>
+                                {baraja1.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "50px", 'height': "70px"}}
+                                        onClick={() => cartaJugadaPorJugador(item)}
+                                        src={require(`../imagenes/${item}.png`).default}
+                                        />
+                
+                                ))}
+                            </div>
+                                <div className="chatBoxWrapper">
                                     <div className="msg-insert">
                                         {messages.map(msg => {
                                             if(msg.user === 'Player 2')
@@ -676,13 +669,13 @@ const Gamepage = () => {
                                         <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
                                     </div>
                                 </div>
-                            </div>
                             </div>
 
                         </>:<></>} 
 
                         {currentUser === 'Player 2' ? 
-                         <>
+                        <>
+                        <div className="paginaGame">
                             <p className='playerDeckText'>{usuario1}</p>
                             {baraja1.map((item, i) => (
                                 <img
@@ -720,38 +713,26 @@ const Gamepage = () => {
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
-
-                            <div className="chatBoxWrapper">
-                            <div className="chat-box chat-box-player2">
-                                <div className="chat-head">
-                                    <h2>Chat Box</h2>
-                                    <img
-                                        onClick={toggleChatBox}
-                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
-                                        title="Expand Arrow"
-                                        width="16" />
-                                </div>
-                                <div className="chat-body">
-                                    <div className="msg-insert">
-                                        {messages.map(msg => {
-                                            if(msg.user === 'Player 2')
-                                                return <div className="msg-send">{msg.text}</div>
-                                            if(msg.user === 'Player 1')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                            if(msg.user === 'Player 3')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                        })}
-                                    </div>
-                                    <div className="chat-text">
-                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                    </div>
-                                </div>
+                        </div>
+                        <div className="chatBoxWrapper">
+                            <div className="msg-insert">
+                                {messages.map(msg => {
+                                    if(msg.user === 'Player 2')
+                                    return <div className="msg-send">{msg.text}</div>
+                                    if(msg.user === 'Player 1')
+                                        return <div className="msg-receive">{msg.text}</div>
+                                    if(msg.user === 'Player 3')
+                                        return <div className="msg-receive">{msg.text}</div>
+                                })}
                             </div>
+                            <div className="chat-text">
+                                <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
                             </div>
+                        </div>
                         </>:<></>} 
 
                         {currentUser === 'Player 3' ? 
-                         <>
+                        <>
                             <p className='playerDeckText'>{usuario1}</p>
                             {baraja1.map((item, i) => (
                                 <img
@@ -822,7 +803,7 @@ const Gamepage = () => {
                     </>
                     }
                 </>}
-            </>:
+                </>:
             <h1> Lo siento, esta llena la sala</h1>}
         </div>
     )
