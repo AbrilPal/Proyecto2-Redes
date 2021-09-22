@@ -213,8 +213,6 @@ const Gamepage = () => {
                             turno: 'Player 2',
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                             baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
-                            // baraja2: [...baraja2],
-                            // baraja3: [...baraja3],
                             colorActual: colorCartaJugada,
                             numerActual: numeroCartaJugada
                         })
@@ -301,41 +299,41 @@ const Gamepage = () => {
                             gameOver: verFinJuego(baraja1),
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                             baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
-                            baraja2: [...pilaDeCartas.slice(0, baraja2.lenght), drawPilaCarta1, drawPilaCarta2, baraja2.slice(baraja2.length)],
+                            baraja2: [...baraja2.slice(0, baraja2.length), drawPilaCarta1, drawPilaCarta2, baraja2.slice(baraja2.length)],
                             colorActual: colorCartaJugada,
                             numerActual: 500,
                             drawPilaCartas: [...copiaDrawPilaCartas]
                         })
                     }
                     else if(cartaJugadaPor === 'Player 2') {
-                        const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                        const eliminarCartaDeBaraja = baraja2.indexOf(cartaJugada)
                         const copiaDrawPilaCartas = [...drawPilaCartas]
 
                         const drawPilaCarta1 = copiaDrawPilaCartas.pop()
                         const drawPilaCarta2 = copiaDrawPilaCartas.pop()
 
                         socket.emit('updateGameState', {
-                            gameOver: verFinJuego(baraja1),
+                            gameOver: verFinJuego(baraja2),
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
-                            baraja2: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
-                            baraja3: [...pilaDeCartas.slice(0, baraja3.lenght), drawPilaCarta1, drawPilaCarta2, baraja3.slice(baraja3.length)],
+                            baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
+                            baraja3: [...baraja3.slice(0, baraja3.length), drawPilaCarta1, drawPilaCarta2, baraja3.slice(baraja3.length)],
                             colorActual: colorCartaJugada,
                             numerActual: 500,
                             drawPilaCartas: [...copiaDrawPilaCartas]
                         })
                     }
                     else {
-                        const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                        const eliminarCartaDeBaraja = baraja3.indexOf(cartaJugada)
                         const copiaDrawPilaCartas = [...drawPilaCartas]
 
                         const drawPilaCarta1 = copiaDrawPilaCartas.pop()
                         const drawPilaCarta2 = copiaDrawPilaCartas.pop()
 
                         socket.emit('updateGameState', {
-                            gameOver: verFinJuego(baraja1),
+                            gameOver: verFinJuego(baraja3),
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
-                            baraja3: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
-                            baraja1: [...pilaDeCartas.slice(0, baraja1.lenght), drawPilaCarta1, drawPilaCarta2, baraja1.slice(baraja1.length)],
+                            baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
+                            baraja1: [...baraja1.slice(0, baraja1.length), drawPilaCarta1, drawPilaCarta2, baraja1.slice(baraja1.length)],
                             colorActual: colorCartaJugada,
                             numerActual: 500,
                             drawPilaCartas: [...copiaDrawPilaCartas]
@@ -355,31 +353,31 @@ const Gamepage = () => {
                             gameOver: verFinJuego(baraja1),
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                             baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
-                            baraja2: [...pilaDeCartas.slice(0, baraja2.lenght), drawPilaCarta1, drawPilaCarta2, baraja2.slice(baraja2.length)],
+                            baraja2: [...baraja2.slice(0, baraja2.length), drawPilaCarta1, drawPilaCarta2, baraja2.slice(baraja2.length)],
                             colorActual: colorCartaJugada,
                             numerActual: 500,
                             drawPilaCartas: [...copiaDrawPilaCartas]
                         })
                     }
                     else if(cartaJugadaPor === 'Player 2') {
-                        const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                        const eliminarCartaDeBaraja = baraja2.indexOf(cartaJugada)
                         const copiaDrawPilaCartas = [...drawPilaCartas]
 
                         const drawPilaCarta1 = copiaDrawPilaCartas.pop()
                         const drawPilaCarta2 = copiaDrawPilaCartas.pop()
 
                         socket.emit('updateGameState', {
-                            gameOver: verFinJuego(baraja1),
+                            gameOver: verFinJuego(baraja2),
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
-                            baraja2: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
-                            baraja3: [...pilaDeCartas.slice(0, baraja3.lenght), drawPilaCarta1, drawPilaCarta2, baraja3.slice(baraja3.length)],
+                            baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
+                            baraja3: [...baraja3.slice(0, baraja3.length), drawPilaCarta1, drawPilaCarta2, baraja3.slice(baraja3.length)],
                             colorActual: colorCartaJugada,
                             numerActual: 500,
                             drawPilaCartas: [...copiaDrawPilaCartas]
                         })
                     }
                     else {
-                        const eliminarCartaDeBaraja = baraja1.indexOf(cartaJugada)
+                        const eliminarCartaDeBaraja = baraja3.indexOf(cartaJugada)
                         const copiaDrawPilaCartas = [...drawPilaCartas]
 
                         const drawPilaCarta1 = copiaDrawPilaCartas.pop()
@@ -388,8 +386,8 @@ const Gamepage = () => {
                         socket.emit('updateGameState', {
                             gameOver: verFinJuego(baraja1),
                             pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
-                            baraja3: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
-                            baraja1: [...pilaDeCartas.slice(0, baraja1.lenght), drawPilaCarta1, drawPilaCarta2, baraja1.slice(baraja1.length)],
+                            baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
+                            baraja1: [...baraja1.slice(0, baraja1.length), drawPilaCarta1, drawPilaCarta2, baraja1.slice(baraja1.length)],
                             colorActual: colorCartaJugada,
                             numerActual: 500,
                             drawPilaCartas: [...copiaDrawPilaCartas]
@@ -525,6 +523,7 @@ const Gamepage = () => {
                         numerActual: 700
                     })
                 }
+                break;
             }
 
             // Caso Draw 4 Wild, carta para cambiar el color pero tambien dar 4 cartas
@@ -546,7 +545,7 @@ const Gamepage = () => {
                         gameOver: verFinJuego(baraja1),
                         pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                         baraja1: [...baraja1.slice(0, eliminarCartaDeBaraja), ...baraja1.slice(eliminarCartaDeBaraja + 1)],
-                        baraja2: [...pilaDeCartas.slice(0, baraja2.lenght), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja2.slice(baraja2.length)],
+                        baraja2: [...baraja2.slice(0, baraja2.length), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja2.slice(baraja2.length)],
                         colorActual: nuevoColorCartaJugada,
                         numerActual: 800,
                         drawPilaCartas: [...copiaDrawPilaCartas]
@@ -567,7 +566,7 @@ const Gamepage = () => {
                         gameOver: verFinJuego(baraja2),
                         pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                         baraja2: [...baraja2.slice(0, eliminarCartaDeBaraja), ...baraja2.slice(eliminarCartaDeBaraja + 1)],
-                        baraja3: [...pilaDeCartas.slice(0, baraja3.lenght), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja3.slice(baraja3.length)],
+                        baraja3: [...baraja3.slice(0, baraja3.length), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja3.slice(baraja3.length)],
                         colorActual: nuevoColorCartaJugada,
                         numerActual: 800,
                         drawPilaCartas: [...copiaDrawPilaCartas]
@@ -588,7 +587,7 @@ const Gamepage = () => {
                         gameOver: verFinJuego(baraja3),
                         pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), cartaJugada, ...pilaDeCartas.slice(pilaDeCartas.length)],
                         baraja3: [...baraja3.slice(0, eliminarCartaDeBaraja), ...baraja3.slice(eliminarCartaDeBaraja + 1)],
-                        baraja1: [...pilaDeCartas.slice(0, baraja1.lenght), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja1.slice(baraja1.length)],
+                        baraja1: [...baraja1.slice(0, baraja1.length), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, baraja1.slice(baraja1.length)],
                         colorActual: nuevoColorCartaJugada,
                         numerActual: 800,
                         drawPilaCartas: [...copiaDrawPilaCartas]
@@ -598,6 +597,262 @@ const Gamepage = () => {
 
         }
         
+    }
+
+    const drawCartaPilaDeCartas = () => {
+        const drawnCartaPor = turno
+        
+        if (drawnCartaPor === 'Player 1') {
+            const copiaDrawPilaCartas = [...drawPilaCartas]
+            const drawCarta = copiaDrawPilaCartas.pop()
+            const colorDrawnCarta = drawCarta.charAt(drawCarta.length - 1)
+            let numerDrawnCarta = drawCarta.charAt(0)
+
+            if(colorDrawnCarta === colorActual || numerDrawnCarta === numerActual) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja1),
+                    turno: 'Player 2',
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if (colorDrawnCarta === colorActual && (drawCarta === 'D2R' || drawCarta === 'D2B' || drawCarta === 'D2Y' || drawCarta === 'D2G')) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const copiaDrawPilaCartas = [...drawPilaCartas]
+
+                const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja1),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    baraja2: [...baraja2.slice(0, baraja2.length), drawPilaCarta1, drawPilaCarta2, ...baraja2.slice(baraja2.length)],
+                    colorActual: colorDrawnCarta,
+                    numerActual: 500,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(colorDrawnCarta === colorActual && (drawCarta === 'skipR' || drawCarta === 'skipB' || drawCarta === 'skipY' || drawCarta === 'skipG')) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja1),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    colorActual: colorDrawnCarta,
+                    numerActual: 600,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(drawCarta === 'W') {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const nuevoColorCarta = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja1),
+                    turno: 'Player 2',
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    colorActual: nuevoColorCarta,
+                    numerActual: 700,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(drawCarta === 'D4W') {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const nuevoColorCarta = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                const copiaDrawPilaCartas = [...drawPilaCartas]
+                
+                const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta3 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta4 = copiaDrawPilaCartas.pop()
+                
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja1),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    baraja2: [...baraja2.slice(0, baraja2.length), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, ...baraja2.slice(baraja2.length)],
+                    colorActual: nuevoColorCarta,
+                    numerActual: 800,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else {
+                alert(`La carta que se obtuvo es la de ${drawCarta}`)
+                
+                socket.emit('updateGameState', {
+                    turno: 'Player 2',
+                    baraja1: [...baraja1.slice(0, baraja1.length), drawCarta, ...baraja1.slice(baraja1.length)],
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+
+        }
+        else if (drawnCartaPor === 'Player 2') {
+            const copiaDrawPilaCartas = [...drawPilaCartas]
+            const drawCarta = copiaDrawPilaCartas.pop()
+            const colorDrawnCarta = drawCarta.charAt(drawCarta.length - 1)
+            let numerDrawnCarta = drawCarta.charAt(0)
+
+            if(colorDrawnCarta === colorActual || numerDrawnCarta === numerActual) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja2),
+                    turno: 'Player 3',
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if (colorDrawnCarta === colorActual && (drawCarta === 'D2R' || drawCarta === 'D2B' || drawCarta === 'D2Y' || drawCarta === 'D2G')) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const copiaDrawPilaCartas = [...drawPilaCartas]
+
+                const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja2),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    baraja3: [...baraja3.slice(0, baraja3.length), drawPilaCarta1, drawPilaCarta2, ...baraja3.slice(baraja3.length)],
+                    colorActual: colorDrawnCarta,
+                    numerActual: 500,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(colorDrawnCarta === colorActual && (drawCarta === 'skipR' || drawCarta === 'skipB' || drawCarta === 'skipY' || drawCarta === 'skipG')) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja2),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    colorActual: colorDrawnCarta,
+                    numerActual: 600,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(drawCarta === 'W') {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const nuevoColorCarta = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja2),
+                    turno: 'Player 3',
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    colorActual: nuevoColorCarta,
+                    numerActual: 700,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(drawCarta === 'D4W') {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const nuevoColorCarta = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                const copiaDrawPilaCartas = [...drawPilaCartas]
+                
+                const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta3 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta4 = copiaDrawPilaCartas.pop()
+                
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja2),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    baraja3: [...baraja3.slice(0, baraja3.length), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, ...baraja3.slice(baraja3.length)],
+                    colorActual: nuevoColorCarta,
+                    numerActual: 800,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else {
+                alert(`La carta que se obtuvo es la de ${drawCarta}`)
+                
+                socket.emit('updateGameState', {
+                    turno: 'Player 3',
+                    baraja2: [...baraja2.slice(0, baraja2.length), drawCarta, ...baraja2.slice(baraja2.length)],
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+        }
+        else {
+            const copiaDrawPilaCartas = [...drawPilaCartas]
+            const drawCarta = copiaDrawPilaCartas.pop()
+            const colorDrawnCarta = drawCarta.charAt(drawCarta.length - 1)
+            let numerDrawnCarta = drawCarta.charAt(0)
+
+            if(colorDrawnCarta === colorActual || numerDrawnCarta === numerActual) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja2),
+                    turno: 'Player 1',
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if (colorDrawnCarta === colorActual && (drawCarta === 'D2R' || drawCarta === 'D2B' || drawCarta === 'D2Y' || drawCarta === 'D2G')) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const copiaDrawPilaCartas = [...drawPilaCartas]
+
+                const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja3),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    baraja1: [...baraja1.slice(0, baraja1.length), drawPilaCarta1, drawPilaCarta2, ...baraja1.slice(baraja1.length)],
+                    colorActual: colorDrawnCarta,
+                    numerActual: 500,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(colorDrawnCarta === colorActual && (drawCarta === 'skipR' || drawCarta === 'skipB' || drawCarta === 'skipY' || drawCarta === 'skipG')) {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja3),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    colorActual: colorDrawnCarta,
+                    numerActual: 600,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(drawCarta === 'W') {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const nuevoColorCarta = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja3),
+                    turno: 'Player 1',
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    colorActual: nuevoColorCarta,
+                    numerActual: 700,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else if(drawCarta === 'D4W') {
+                alert(`La carta que se obtuvo es la de ${drawCarta} y se jugo`)
+                const nuevoColorCarta = prompt('A que color desea cambiar R (Red) / B (Blue) / Y (Yellow) / G (Green)')
+                const copiaDrawPilaCartas = [...drawPilaCartas]
+                
+                const drawPilaCarta1 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta2 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta3 = copiaDrawPilaCartas.pop()
+                const drawPilaCarta4 = copiaDrawPilaCartas.pop()
+                
+                socket.emit('updateGameState', {
+                    gameOver: verFinJuego(baraja3),
+                    pilaDeCartas: [...pilaDeCartas.slice(0, pilaDeCartas.length), drawCarta, ...pilaDeCartas.slice(pilaDeCartas.length)],
+                    baraja1: [...baraja1.slice(0, baraja1.length), drawPilaCarta1, drawPilaCarta2, drawPilaCarta3, drawPilaCarta4, ...baraja1.slice(baraja1.length)],
+                    colorActual: nuevoColorCarta,
+                    numerActual: 800,
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+            else {
+                alert(`La carta que se obtuvo es la de ${drawCarta}`)
+                
+                socket.emit('updateGameState', {
+                    turno: 'Player 1',
+                    baraja3: [...baraja3.slice(0, baraja3.length), drawCarta, ...baraja3.slice(baraja3.length)],
+                    drawPilaCartas: [...copiaDrawPilaCartas]
+                })
+            }
+        } 
+
     }
 
     return (
@@ -653,6 +908,7 @@ const Gamepage = () => {
                                         />
                 
                                 ))}
+                                <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
                             </div>
                                 <div className="chatBoxWrapper">
                                     <div className="msg-insert">
@@ -713,6 +969,7 @@ const Gamepage = () => {
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
+                            <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
                         </div>
                         <div className="chatBoxWrapper">
                             <div className="msg-insert">
@@ -770,6 +1027,7 @@ const Gamepage = () => {
                                     src={require(`../imagenes/${item}.png`).default}
                                     />
                             ))}
+                            <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
 
                             <div className="chatBoxWrapper">
                             <div className="chat-box chat-box-player3">
