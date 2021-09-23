@@ -1540,9 +1540,11 @@ const Gamepage = () => {
                                             return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                     })}
                                 </div>
+                                <div></div>
                                 <div className="chat-text">
                                     <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
                                 </div>
+                               
                             </div>
                             </div>
                         </div>
