@@ -1614,8 +1614,8 @@ const Gamepage = () => {
                                             />
                     
                                     ))}
-                                    <button disabled={turno !== 'Player 1'} disabled={turno !== 'Player 1'} onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
-                                    <button disabled={baraja1.length !== 2} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
+                                    <Button color="secondary" variant="outlined" disabled={turno !== 'Player 1'} disabled={turno !== 'Player 1'} onClick={drawCartaPilaDeCartas}>DRAW CARTA</Button>
+                                    <Button color="secondary" variant="outlined" disabled={baraja1.length !== 2} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</Button>
                                 </div> 
                                 
                             </div>
@@ -1695,8 +1695,8 @@ const Gamepage = () => {
                                             alt=""
                                             />
                                     ))}
-                                    <button disabled={turno !== 'Player 2'} onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
-                                    <button disabled={baraja2.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
+                                    <Button color="secondary" variant="outlined" disabled={turno !== 'Player 2'} onClick={drawCartaPilaDeCartas}>DRAW CARTA</Button>
+                                    <Button color="secondary" variant="outlined" disabled={baraja2.length !== 2} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</Button>
                                 </div>
                                 
                             </div>
@@ -1775,8 +1775,8 @@ const Gamepage = () => {
                                             alt=""
                                             />
                                     ))}
-                                    <button disabled={turno !== 'Player 3'} onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
-                                    <button disabled={baraja3.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
+                                    <Button color="secondary" variant="outlined" disabled={turno !== 'Player 3'} onClick={drawCartaPilaDeCartas}>DRAW CARTA</Button>
+                                    <Button color="secondary" variant="outlined" disabled={baraja3.length !== 2} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</Button>
                                 </div>
                                 
                             </div>
