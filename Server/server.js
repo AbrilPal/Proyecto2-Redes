@@ -84,6 +84,8 @@ io.on('connection', (socket) => {
         const user = getUser(socket.id)
         if(user)
             io.to(user.sala).emit('updateGameState', gameState)
+            console.log("dentro del if ", user, gameState)
+        console.log("fuera del if ", user, gameState)
     })
 
     socket.on('sendMessage', (payload, callback) => {
