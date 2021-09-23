@@ -1530,21 +1530,23 @@ const Gamepage = () => {
                                 <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
                                 <button disabled={baraja1.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
                             </div>
-                                <div className="chatBoxWrapper">
-                                    <div className="msg-insert">
-                                        {messages.map(msg => {
-                                            if(msg.user === 'Player 1')
-                                                return <div className="msg-send">{msg.text}</div>
-                                            if(msg.user === 'Player 2')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                            if(msg.user === 'Player 3')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                        })}
-                                    </div>
-                                    <div className="chat-text">
-                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                    </div>
+                            <div className="chatcontenedor">
+                            <div className="chat">
+                                <div className="mensajes">
+                                    {messages.map(msg => {
+                                        if(msg.user === 'Player 1')
+                                            return <div className="msg-send">{msg.text}</div>
+                                        if(msg.user === 'Player 2')
+                                            return <div className="msg-receive">{msg.text}</div>
+                                        if(msg.user === 'Player 3')
+                                            return <div className="msg-receive">{msg.text}</div>
+                                    })}
                                 </div>
+                                <div className="chat-text">
+                                    <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                </div>
+                            </div>
+                            </div>
                         </div>
 
                         </>:<></>} 
@@ -1593,22 +1595,22 @@ const Gamepage = () => {
                                 <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
                                 <button disabled={baraja2.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
                             </div>
-                            <div>
-                                <div className="chatBoxWrapper">
-                                    <div className="msg-insert">
-                                        {messages.map(msg => {
-                                            if(msg.user === 'Player 2')
+                            <div className="chatcontenedor">
+                            <div className="chat">
+                                <div className="mensajes">
+                                    {messages.map(msg => {
+                                        if(msg.user === 'Player 2')
                                             return <div className="msg-send">{msg.text}</div>
-                                            if(msg.user === 'Player 1')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                            if(msg.user === 'Player 3')
-                                                return <div className="msg-receive">{msg.text}</div>
-                                        })}
-                                    </div>
-                                    <div className="chat-text">
-                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                    </div>
+                                        if(msg.user === 'Player 3')
+                                            return <div className="msg-receive">{msg.text}</div>
+                                        if(msg.user === 'Player 3')
+                                            return <div className="msg-receive">{msg.text}</div>
+                                    })}
                                 </div>
+                                <div className="chat-text">
+                                    <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                </div>
+                            </div>
                             </div>
                         </div>
                         </>:<></>} 
@@ -1656,9 +1658,9 @@ const Gamepage = () => {
                                 <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
                                 <button disabled={baraja3.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
                             </div>
-                            <div>
-                                <div className="chatBoxWrapper">
-                                        <div className="msg-insert">
+                            <div className="chatcontenedor">
+                                <div className="chat">
+                                        <div className="mensajes">
                                             {messages.map(msg => {
                                                 if(msg.user === 'Player 2')
                                                     return <div className="msg-receive">{msg.text}</div>
@@ -1672,7 +1674,7 @@ const Gamepage = () => {
                                             <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
                                         </div>
                                 </div>
-                             </div>
+                                </div>
                         </div>
                         </>:<></>} 
 

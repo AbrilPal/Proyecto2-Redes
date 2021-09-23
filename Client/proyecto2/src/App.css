@@ -79,12 +79,6 @@
 	overflow: hidden auto;
 	margin-bottom: 45px;
 }
-.chat-text{
-	position: fixed;
-	bottom: 0px;
-	height: 45px;
-	width: inherit;
-}
 .chat-text input{
 	width: inherit;
 	height: inherit; 
@@ -139,5 +133,21 @@
 
 .paginaGame{
 	display: grid;
-	grid-template-columns: 80% 20%;
+	grid-template-columns: 75% 25%;
+}
+
+.chat{
+	display: grid;
+	grid-template-rows: 80% 20%;
+}
+
+.mensajes{
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 100%;
+	max-height: 540px;
+}
+
+.chatcontenedor{
+	max-height: 900px;
 }
