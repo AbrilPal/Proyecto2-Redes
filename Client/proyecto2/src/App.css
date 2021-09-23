@@ -79,12 +79,6 @@
 	overflow: hidden auto;
 	margin-bottom: 45px;
 }
-.chat-text{
-	position: fixed;
-	bottom: 0px;
-	height: 45px;
-	width: inherit;
-}
 .chat-text input{
 	width: inherit;
 	height: inherit; 
@@ -92,20 +86,20 @@
 	border: 1px solid #bdc3c7;
 	padding: 10px;
 	resize: none;
-  outline: none;
+  	outline: none;
 }
 .chat-text input:active, .chat-text input:focus, .chat-text input:hover{
 	border-color: royalblue;
 }
 .msg-send{
-	background: #406a4b;
+	background: #4d2f53;
 }
 .msg-receive{
-	background: #595080;
+	background: #4f418d;
 }
 .msg-send, .msg-receive{
 	width: 285px;
-	height: 35px;
+	height: auto;
 	padding: 5px 5px 5px 10px;
 	margin: 5px auto;
 	border-radius: 3px;
@@ -119,7 +113,7 @@
 	height: 0px;
 	position: absolute;
 	border: 15px solid;
-	border-color: transparent #595080 transparent transparent;
+	border-color: transparent #4f418d transparent transparent;
 	left: -29px;
 	top: 7px;
 }
@@ -129,7 +123,7 @@
 	height: 0px;
 	position: absolute;
 	border: 15px solid;
-	border-color: transparent transparent transparent #406a4b;
+	border-color: transparent transparent transparent #4d2f53;
 	right: -29px;
 	top: 7px;
 }
@@ -139,5 +133,22 @@
 
 .paginaGame{
 	display: grid;
-	grid-template-columns: 80% 20%;
+	grid-template-columns: 75% 25%;
+}
+
+.chat{
+	display: grid;
+	grid-template-rows: 80% 20%;
+}
+
+.mensajes{
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 100%;
+	max-height: 540px;
+	min-height: 540px;
+}
+
+.chatcontenedor{
+	max-height: 900px;
 }
