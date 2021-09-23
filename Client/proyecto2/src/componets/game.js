@@ -1546,131 +1546,64 @@ const Gamepage = () => {
                                         <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
                                     </div>
                                 </div>
-                            </div>
+                        </div>
 
                         </>:<></>} 
 
                         {currentUser === 'Player 2' ? 
                         <>
                         <div className="paginaGame">
-                            <p className='playerDeckText'>{usuario1}</p>
-                            {baraja1.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "30px", 'height': "50px"}}
-                                    src={require(`../imagenes/card-back.png`).default}
-                                    />
-                            ))}
-                            <br></br>
-                            <br></br>
-                            <p className='playerDeckText'>{usuario3}</p>
-                            {baraja3.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "30px", 'height': "50px"}}
-                                    src={require(`../imagenes/card-back.png`).default}
-                                    />
-                            ))}
-                            <br></br>
-                            <br></br>
-                            {pilaDeCartas && pilaDeCartas.length>0 ? <>
-                                <img
-                                style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
-                                />
-                            </>:<></>}
-                            <br></br>
-                            <br></br>
-                            <p className='playerDeckText'>{usuario2}</p>
-                            {baraja2.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "50px", 'height': "70px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
-                                    src={require(`../imagenes/${item}.png`).default}
-                                    />
-                            ))}
-                            <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
-                            <button disabled={baraja2.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
-                        </div>
-                        <div className="chatBoxWrapper">
-                            <div className="msg-insert">
-                                {messages.map(msg => {
-                                    if(msg.user === 'Player 2')
-                                    return <div className="msg-send">{msg.text}</div>
-                                    if(msg.user === 'Player 1')
-                                        return <div className="msg-receive">{msg.text}</div>
-                                    if(msg.user === 'Player 3')
-                                        return <div className="msg-receive">{msg.text}</div>
-                                })}
-                            </div>
-                            <div className="chat-text">
-                                <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                            </div>
-                        </div>
-                        </>:<></>} 
-
-                        {currentUser === 'Player 3' ? 
-                        <>
-                            <p className='playerDeckText'>{usuario1}</p>
-                            {baraja1.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "30px", 'height': "50px"}}
-                                    src={require(`../imagenes/card-back.png`).default}
-                                    />
-                            ))}
-                            <br></br>
-                            <br></br>
-                            <p className='playerDeckText'>{usuario2}</p>
-                            {baraja2.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "30px", 'height': "50px"}}
-                                    src={require(`../imagenes/card-back.png`).default}
-                                    />
-                            ))}
-                            <br></br>
-                            <br></br>
-                            {pilaDeCartas && pilaDeCartas.length>0 ? <>
-                                <img
-                                style={{'width': "80px", 'height': "100px"}}
-                                src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
-                                />
-                            </>:<></>}
-                            <br></br>
-                            <br></br>
-                            <p className='playerDeckText'>{usuario3}</p>
-                            {baraja3.map((item, i) => (
-                                <img
-                                    key={i}
-                                    style={{'width': "50px", 'height': "70px"}}
-                                    onClick={() => cartaJugadaPorJugador(item)}
-                                    src={require(`../imagenes/${item}.png`).default}
-                                    />
-                            ))}
-                            <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
-                            <button disabled={baraja3.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
-
-                            <div className="chatBoxWrapper">
-                            <div className="chat-box chat-box-player3">
-                                <div className="chat-head">
-                                    <h2>Chat Box</h2>
+                            <div>
+                                <p className='playerDeckText'>{usuario1}</p>
+                                {baraja1.map((item, i) => (
                                     <img
-                                        onClick={toggleChatBox}
-                                        src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
-                                        title="Expand Arrow"
-                                        width="16" />
-                                </div>
-                                <div className="chat-body">
+                                        key={i}
+                                        style={{'width': "30px", 'height': "50px"}}
+                                        src={require(`../imagenes/card-back.png`).default}
+                                        />
+                                ))}
+                                <br></br>
+                                <br></br>
+                                <p className='playerDeckText'>{usuario3}</p>
+                                {baraja3.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "30px", 'height': "50px"}}
+                                        src={require(`../imagenes/card-back.png`).default}
+                                        />
+                                ))}
+                                <br></br>
+                                <br></br>
+                                {pilaDeCartas && pilaDeCartas.length>0 ? <>
+                                    <img
+                                    style={{'width': "80px", 'height': "100px"}}
+                                    src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
+                                    />
+                                </>:<></>}
+                                <br></br>
+                                <br></br>
+                                <p className='playerDeckText'>{usuario2}</p>
+                                {baraja2.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "50px", 'height': "70px"}}
+                                        onClick={() => cartaJugadaPorJugador(item)}
+                                        src={require(`../imagenes/${item}.png`).default}
+                                        />
+                                ))}
+                                <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
+                                <button disabled={baraja2.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
+                            </div>
+                            <div>
+                                <div className="chatBoxWrapper">
                                     <div className="msg-insert">
                                         {messages.map(msg => {
                                             if(msg.user === 'Player 2')
-                                                return <div className="msg-receive">{msg.text}</div>
+                                            return <div className="msg-send">{msg.text}</div>
                                             if(msg.user === 'Player 1')
                                                 return <div className="msg-receive">{msg.text}</div>
                                             if(msg.user === 'Player 3')
-                                                return <div className="msg-send">{msg.text}</div>
+                                                return <div className="msg-receive">{msg.text}</div>
                                         })}
                                     </div>
                                     <div className="chat-text">
@@ -1678,7 +1611,80 @@ const Gamepage = () => {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        </>:<></>} 
+                        {currentUser === 'Player 3' ? 
+                        <>
+                        <div className="paginaGame">
+                            <div>
+                                <p className='playerDeckText'>{usuario1}</p>
+                                {baraja1.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "30px", 'height': "50px"}}
+                                        src={require(`../imagenes/card-back.png`).default}
+                                        />
+                                ))}
+                                <br></br>
+                                <br></br>
+                                <p className='playerDeckText'>{usuario2}</p>
+                                {baraja2.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "30px", 'height': "50px"}}
+                                        src={require(`../imagenes/card-back.png`).default}
+                                        />
+                                ))}
+                                <br></br>
+                                <br></br>
+                                {pilaDeCartas && pilaDeCartas.length>0 ? <>
+                                    <img
+                                    style={{'width': "80px", 'height': "100px"}}
+                                    src={require(`../imagenes/${pilaDeCartas[pilaDeCartas.length-1]}.png`).default}
+                                    />
+                                </>:<></>}
+                                <br></br>
+                                <br></br>
+                                <p className='playerDeckText'>{usuario3}</p>
+                                {baraja3.map((item, i) => (
+                                    <img
+                                        key={i}
+                                        style={{'width': "50px", 'height': "70px"}}
+                                        onClick={() => cartaJugadaPorJugador(item)}
+                                        src={require(`../imagenes/${item}.png`).default}
+                                        />
+                                ))}
+                                <button onClick={drawCartaPilaDeCartas}>DRAW CARTA</button>
+                                <button disabled={baraja3.length !== 1} onClick={() => { setbotonUnopresionado(!botonUnoPresionado) }}>UNO</button>
                             </div>
+                            <div>
+                                <div className="chatBoxWrapper">
+                                <div className="chat-box chat-box-player3">
+                                    <div className="chat-head">
+                                        <h2>Chat Box</h2>
+                                        <img
+                                            onClick={toggleChatBox}
+                                            src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png"
+                                            title="Expand Arrow"
+                                            width="16" />
+                                    </div>
+                                        <div className="msg-insert">
+                                            {messages.map(msg => {
+                                                if(msg.user === 'Player 2')
+                                                    return <div className="msg-receive">{msg.text}</div>
+                                                if(msg.user === 'Player 1')
+                                                    return <div className="msg-receive">{msg.text}</div>
+                                                if(msg.user === 'Player 3')
+                                                    return <div className="msg-send">{msg.text}</div>
+                                            })}
+                                        </div>
+                                        <div className="chat-text">
+                                            <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                        </div>
+                                </div>
+                                </div>
+                             </div>
+                        </div>
                         </>:<></>} 
 
                     </>
