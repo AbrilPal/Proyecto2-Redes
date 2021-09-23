@@ -167,9 +167,7 @@ const Gamepage = () => {
         })
 
         socket.on('message', (message) => {
-            console.log("mensaje", message)
             setMessages(messages => [ ...messages, message ])
-            const chatBody = document.querySelector('.chat-body')
         })
     }, [])
     
@@ -1537,9 +1535,9 @@ const Gamepage = () => {
                                         if(msg.user === 'Player 1')
                                             return <div className="msg-send">{msg.text}</div>
                                         if(msg.user === 'Player 2')
-                                            return <div className="msg-receive">{msg.text}</div>
+                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                         if(msg.user === 'Player 3')
-                                            return <div className="msg-receive">{msg.text}</div>
+                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                     })}
                                 </div>
                                 <div className="chat-text">
@@ -1602,9 +1600,9 @@ const Gamepage = () => {
                                         if(msg.user === 'Player 2')
                                             return <div className="msg-send">{msg.text}</div>
                                         if(msg.user === 'Player 3')
-                                            return <div className="msg-receive">{msg.text}</div>
+                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                         if(msg.user === 'Player 3')
-                                            return <div className="msg-receive">{msg.text}</div>
+                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                     })}
                                 </div>
                                 <div className="chat-text">
@@ -1663,9 +1661,9 @@ const Gamepage = () => {
                                         <div className="mensajes">
                                             {messages.map(msg => {
                                                 if(msg.user === 'Player 2')
-                                                    return <div className="msg-receive">{msg.text}</div>
+                                                    return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                                 if(msg.user === 'Player 1')
-                                                    return <div className="msg-receive">{msg.text}</div>
+                                                    return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
                                                 if(msg.user === 'Player 3')
                                                     return <div className="msg-send">{msg.text}</div>
                                             })}
