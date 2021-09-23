@@ -72,26 +72,27 @@ io.on('connection', (socket) => {
         const user = removeUser(socket.id)
         if(user)
             io.to(user.sala).emit('salaData', {sala: user.sala, users: getUsersInsala(user.sala)})
+            console.log("Se desconecto el usuario: ", user.userName , " del room: ", user.sala)
     })
 
     socket.on('initGameState', gameState => {
         const user = getUser(socket.id)
         if(user)
             io.to(user.sala).emit('initGameState', gameState)
+            console.log("Se inicio el juego de la sala: ", user.sala)
     })
 
     socket.on('updateGameState', gameState => {
         const user = getUser(socket.id)
         if(user)
             io.to(user.sala).emit('updateGameState', gameState)
-            console.log("dentro del if ", user, gameState)
-        console.log("fuera del if ", user, gameState)
     })
 
     socket.on('sendMessage', (payload, callback) => {
         const user = getUser(socket.id)
         const data = Object.values(user)
         io.to(data[2]).emit('message', {user: user.name, name: user.userName, text: payload.message})
+        console.log("Se mando un mensaje al room: ", data[2])
         callback()
     })
 
