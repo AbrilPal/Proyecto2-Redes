@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -24,6 +24,7 @@ const Homepage = () => {
         <div className='Homepage'>
             <img
             src={require(`../imagenes/logo.png`).default}
+            alt=""
             />
             <h1>¿Cómo se juega?</h1>
             <p style={{'marginLeft': '100px', 'marginRight': '100px', 'textAlign': 'justify'}}>Cada jugador mira sus cartas e intenta hacer coincidir la carta en la pila de descarte.
@@ -35,30 +36,35 @@ const Homepage = () => {
             <img
             style={{'width': '80px', 'height': '100px'}}
             src={require(`../imagenes/_B.png`).default}
+            alt=""
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>si va en el sentido de las agujas del reloj, cambie a la izquierda o viceversa. Solo se puede jugar en una carta que coincida por color o en otra carta inversa.</p>
             <h5>Omitir</h5>
             <img
             style={{'width': '80px', 'height': '100px'}}
             src={require(`../imagenes/skipR.png`).default}
+            alt=""
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>cuando un jugador coloca esta carta, el siguiente jugador debe omitir su turno. Solo se puede jugar en una carta que coincida por color o en otra carta de salto.</p>
             <h5>Robar dos</h5>
             <img
             style={{'width': '80px', 'height': '100px'}}
             src={require(`../imagenes/D2Y.png`).default}
+            alt=""
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>cuando una persona coloca esta carta, el siguiente jugador tendrá que recoger dos cartas y perder su turno. Solo se puede jugar en una carta que coincida por color, o en otro Robar Dos.</p>
             <h5>Comodín Robar cuatro</h5>
             <img
             style={{'width': '80px', 'height': '100px'}}
             src={require(`../imagenes/D4W.png`).default}
+            alt=""
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>actúa como el comodín, excepto que el siguiente jugador también tiene que robar cuatro cartas y perder su turno. Con esta carta, no debe tener otras cartas alternativas para jugar que coincidan con el color de la carta jugada anteriormente.</p>
             <h5>Comodín</h5>
             <img
             style={{'width': '80px', 'height': '100px'}}
             src={require(`../imagenes/W.png`).default}
+            alt=""
             />
             <p style={{'marginLeft': '300px', 'marginRight': '300px', 'textAlign': 'justify'}}>esta carta representa los cuatro colores y se puede colocar en cualquier carta. El jugador debe indicar qué color representará para el siguiente jugador.</p>
             <br></br>

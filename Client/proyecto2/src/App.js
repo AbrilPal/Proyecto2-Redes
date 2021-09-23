@@ -1,13 +1,13 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 import {
   BrowserRouter as Router,
-  Switch,
+  // Switch,
   Route,
-  Link
+  // Link
 } from "react-router-dom";
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import Homepage from './componets/home'
 import gamepage from './componets/game'
 
