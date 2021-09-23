@@ -1613,21 +1613,22 @@ const Gamepage = () => {
                                 
                             </div>
                             <div className="chatcontenedor">
-                            <div className="chat">
-                                <div className="mensajes">
-                                    {messages.map(msg => {
-                                        if(msg.user === 'Player 1')
-                                            return <div className="msg-send">{msg.text}</div>
-                                        if(msg.user === 'Player 2')
-                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
-                                        if(msg.user === 'Player 3')
-                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
-                                    })}
+                                <div className="chat">
+                                    <div className="mensajes">
+                                        {messages.map(msg => {
+                                            if(msg.user === 'Player 1')
+                                                return <div className="msg-send">{"Yo:  " + msg.text}</div>
+                                            if(msg.user === 'Player 2')
+                                                return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
+                                            if(msg.user === 'Player 3')
+                                                return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
+                                        })}
+                                    </div>
+                                    <div className="chat-text">
+                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                    </div>
+                                
                                 </div>
-                                <div className="chat-text">
-                                    <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                </div>
-                            </div>
                             </div>
                         </div>
 
@@ -1689,21 +1690,22 @@ const Gamepage = () => {
                                 
                             </div>
                             <div className="chatcontenedor">
-                            <div className="chat">
-                                <div className="mensajes">
-                                    {messages.map(msg => {
-                                        if(msg.user === 'Player 2')
-                                            return <div className="msg-send">{msg.text}</div>
-                                        if(msg.user === 'Player 3')
-                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
-                                        if(msg.user === 'Player 3')
-                                            return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
-                                    })}
+                                <div className="chat">
+                                    <div className="mensajes">
+                                        {messages.map(msg => {
+                                            if(msg.user === 'Player 2')
+                                                return <div className="msg-send">{"Yo:  " + msg.text}</div>
+                                            if(msg.user === 'Player 1')
+                                                return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
+                                            if(msg.user === 'Player 3')
+                                                return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
+                                        })}
+                                    </div>
+                                    <div className="chat-text">
+                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                    </div>
+                                
                                 </div>
-                                <div className="chat-text">
-                                    <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                </div>
-                            </div>
                             </div>
                         </div>
                         </>:<></>} 
@@ -1765,21 +1767,22 @@ const Gamepage = () => {
                             </div>
                             <div className="chatcontenedor">
                                 <div className="chat">
-                                        <div className="mensajes">
-                                            {messages.map(msg => {
-                                                if(msg.user === 'Player 2')
-                                                    return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
-                                                if(msg.user === 'Player 1')
-                                                    return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
-                                                if(msg.user === 'Player 3')
-                                                    return <div className="msg-send">{msg.text}</div>
-                                            })}
-                                        </div>
-                                        <div className="chat-text">
-                                            <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
-                                        </div>
+                                    <div className="mensajes">
+                                        {messages.map(msg => {
+                                            if(msg.user === 'Player 3')
+                                                return <div className="msg-send">{"Yo:  " + msg.text}</div>
+                                            if(msg.user === 'Player 2')
+                                                return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
+                                            if(msg.user === 'Player 1')
+                                                return <div className="msg-receive">{msg.name + ":  " + msg.text}</div>
+                                        })}
+                                    </div>
+                                    <div className="chat-text">
+                                        <input type='text' placeholder='Escribe un mensaje...' value={message} onChange={event => setMessage(event.target.value)} onKeyPress={event => event.key==='Enter' && sendMessage(event)} />
+                                    </div>
+                                
                                 </div>
-                                </div>
+                            </div>
                         </div>
                         </>:<></>} 
 
